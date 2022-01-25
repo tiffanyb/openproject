@@ -28,56 +28,60 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-class Storages::Admin::StoragesController < ApplicationController
+class Storages::Admin::ProjectsStoragesController < ApplicationController
   layout 'admin'
-  before_action :require_admin
-  menu_item :storages_admin_settings
+  before_action :find_optional_project
+  before_action :authorize
+
+  menu_item :settings_projects_storages
+
 
   def index
-    @storages = Storages::Storage.all
-    render 'storages/admin/index'
-  end
+    @projects_storages = Storages::ProjectStorage.where(project: @project).includes(:storages)
 
-  def show
-    @storage = Storages::Storage.find_by id: params[:id]
-    render 'storages/admin/show'
+    render '/storages/project_settings/index'
   end
 
   def new
-    @storage = Storages::Storage.new(provider_type: 'nextcloud', name: I18n.t('storages.provider_types.nextcloud'))
-    render 'storages/admin/new'
+    @project_storage = Storages::ProjectStorage.new
+    @available_storages = Storages::Storage.where.not(storage_id: @project.projects_storages.pluck(:storage_id))
+    render '/storages/project_settings/new'
   end
 
   def create
-    combined_params = permitted_storage_params
+    combined_params = permitted_project_storage_params
                         .to_h
-                        .reverse_merge(creator_id: current_user.id)
+                        .reverse_merge(creator_id: User.current.id, project: @project)
 
-    @storage = Storages::Storage.create combined_params
-    redirect_to storage_path(@storage)
-  end
+    @project_storage = Storages::ProjectStorage.create combined_params
 
-  def update
-    # tbd
+    redirect_to project_settings_projects_storages_path
   end
 
   def delete
-    # tbd
+    @project_storage = Storages::ProjectStorage.find(params[:project_id])
+    @project_storage.destroy
+
+    redirect_to project_settings_projects_storages_path
   end
 
   def default_breadcrumb
-    t(:project_module_storages)
+    # t(:project_module_storages)
   end
 
   def show_local_breadcrumb
     true
   end
 
+  current_menu_item :index do
+    :settings_projects_storages
+  end
+
   private
 
-  def permitted_storage_params
+  def permitted_project_storage_params
     params
-      .require(:storages_storage)
-      .permit('name', 'provider_type')
+      .require(:storages_project_storage)
+      .permit('storage_id')
   end
 end

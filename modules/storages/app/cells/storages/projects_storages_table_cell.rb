@@ -1,5 +1,5 @@
 module Storages
-  class TableCell < ::TableCell
+  class ProjectsStoragesTableCell < ::TableCell
     include ::IconsHelper
     columns :name, :provider_type, :creator, :created_at
 
@@ -12,7 +12,7 @@ module Storages
     end
 
     def inline_create_link
-      link_to(new_storage_path,
+      link_to(new_project_settings_projects_storage_path,
               class: 'wp-inline-create--add-link',
               title: I18n.t('storages.label_new_storage')) do
         op_icon('icon icon-add')
@@ -28,8 +28,12 @@ module Storages
         ['name', { caption: Storages::Storage.human_attribute_name(:name) }],
         ['provider_type', { caption: I18n.t('storages.provider_types.label') }],
         ['creator', { caption: I18n.t('storages.label_creator') }],
-        ['created_at', { caption: Storages::Storage.human_attribute_name(:created_at) }]
+        ['created_at', { caption: Storages::ProjectStorage.human_attribute_name(:created_at) }]
       ]
+    end
+
+    def row_class
+      ::Storages::ProjectsStoragesRowCell
     end
   end
 end
