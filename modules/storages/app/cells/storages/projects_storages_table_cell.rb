@@ -1,5 +1,11 @@
 module Storages
   class ProjectsStoragesTableCell < ::TableCell
+    class << self
+      def row_class
+        ::Storages::ProjectsStoragesRowCell
+      end
+    end
+
     include ::IconsHelper
     columns :name, :provider_type, :creator, :created_at
 
@@ -30,10 +36,6 @@ module Storages
         ['creator', { caption: I18n.t('storages.label_creator') }],
         ['created_at', { caption: Storages::ProjectStorage.human_attribute_name(:created_at) }]
       ]
-    end
-
-    def row_class
-      ::Storages::ProjectsStoragesRowCell
     end
   end
 end
