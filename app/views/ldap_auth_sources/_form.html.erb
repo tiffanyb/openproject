@@ -104,7 +104,7 @@ See COPYRIGHT and LICENSE files for more details.
     </div>
     <div class="form--field">
       <%= f.password_field 'account_password',
-                           label: AuthSource.human_attribute_name(:password),
+                           label: LdapAuthSource.human_attribute_name(:password),
                            placeholder: ((@auth_source.new_record? || @auth_source.account_password.blank?) ? '' : ('●'*15)),
                            autocomplete: 'off',
                            container_class: '-middle' %>
@@ -175,7 +175,7 @@ See COPYRIGHT and LICENSE files for more details.
 
   <div class="form--field -required">
     <%= f.text_field 'attr_login',
-                     label: AuthSource.human_attribute_name(:login),
+                     label: LdapAuthSource.human_attribute_name(:login),
                      required: true,
                      size: 20,
                      placeholder: 'uid',
@@ -186,36 +186,36 @@ See COPYRIGHT and LICENSE files for more details.
   </div>
   <div class="form--field">
     <%= f.text_field 'attr_firstname',
-                     label: AuthSource.human_attribute_name(:firstname),
+                     label: LdapAuthSource.human_attribute_name(:firstname),
                      size: 20,
                      placeholder: 'givenName',
                      container_class: '-middle'  %>
     <span class="form--field-instructions">
-      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: AuthSource.human_attribute_name(:firstname)) %>
+      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: LdapAuthSource.human_attribute_name(:firstname)) %>
     </span>
   </div>
   <div class="form--field">
     <%= f.text_field 'attr_lastname',
-                     label: AuthSource.human_attribute_name(:lastname),
+                     label: LdapAuthSource.human_attribute_name(:lastname),
                      size: 20,
                      placeholder: 'sn',
                      container_class: '-middle'  %>
     <span class="form--field-instructions">
-      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: AuthSource.human_attribute_name(:lastname)) %>
+      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: LdapAuthSource.human_attribute_name(:lastname)) %>
     </span>
   </div>
   <div class="form--field">
     <%= f.text_field 'attr_mail',
-                     label: AuthSource.human_attribute_name(:mail),
+                     label: LdapAuthSource.human_attribute_name(:mail),
                      size: 20,
                      placeholder: 'mail',
                      container_class: '-middle'  %>
     <span class="form--field-instructions">
-      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: AuthSource.human_attribute_name(:mail)) %>
+      <%= t('ldap_auth_sources.attribute_texts.generic_map', attribute: LdapAuthSource.human_attribute_name(:mail)) %>
     </span>
   </div>
   <div class="form--field">
-    <%= f.text_field 'attr_admin', label: AuthSource.human_attribute_name(:admin), size: 20, container_class: '-middle'  %>
+    <%= f.text_field 'attr_admin', label: LdapAuthSource.human_attribute_name(:admin), size: 20, container_class: '-middle'  %>
     <span class="form--field-instructions">
       <%= t('ldap_auth_sources.attribute_texts.admin_map_html') %>
     </span>

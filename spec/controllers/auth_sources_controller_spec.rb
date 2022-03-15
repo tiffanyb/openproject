@@ -118,7 +118,7 @@ describe AuthSourcesController, type: :controller do
       it { is_expected.to respond_with :redirect }
 
       it 'doesn not destroy the AuthSource' do
-        expect(AuthSource.find(@auth_source.id)).not_to be_nil
+        expect(LdapAuthSource.find(@auth_source.id)).not_to be_nil
       end
     end
   end

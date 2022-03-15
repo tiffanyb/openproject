@@ -31,7 +31,7 @@ require 'spec_helper'
 describe 'create users', type: :feature, selenium: true do
   shared_let(:admin) { create :admin }
   let(:current_user) { admin }
-  let!(:auth_source) { create :dummy_auth_source }
+  let!(:auth_source) { create :ldap_auth_source }
   let(:new_user_page) { Pages::NewUser.new }
   let(:mail) do
     ActionMailer::Base.deliveries.last

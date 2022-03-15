@@ -41,7 +41,7 @@ describe MyController, type: :controller do
   let(:header) { "X-Remote-User" }
   let(:secret) { "42" }
 
-  let!(:auth_source) { DummyAuthSource.create name: "Dummy LDAP" }
+  let!(:auth_source) { create :ldap_auth_source }
   let!(:user) { create :user, login: login, auth_source_id: auth_source.id, last_login_on: 5.days.ago }
   let(:login) { "h.wurst" }
   let(:header_login_value) { login }
@@ -155,7 +155,7 @@ describe MyController, type: :controller do
     end
 
     context "with an invalid user" do
-      let(:auth_source) { DummyAuthSource.create name: "Onthefly LDAP", onthefly_register: true }
+      let(:auth_source) { create :ldap_auth_source }
 
       let!(:duplicate) { create :user, mail: "login@DerpLAP.net" }
       let(:login) { "dummy_dupuser" }

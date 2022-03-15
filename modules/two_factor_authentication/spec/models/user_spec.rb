@@ -13,7 +13,7 @@ module OpenProject::TwoFactorAuthentication::Patches
       end
 
       def create_user_with_auth_source
-        auth_source = AuthSource.new name: "test"
+        auth_source = LdapAuthSource.new name: "test"
         create_user auth_source.id
       end
 

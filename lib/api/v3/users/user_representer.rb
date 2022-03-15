@@ -187,7 +187,7 @@ module API
           auth_source_id = parse_auth_source_id data, "auth_source"
 
           if auth_source_id
-            auth_source = AuthSource.find_by_unique auth_source_id
+            auth_source = LdapAuthSource.find_by_unique auth_source_id
             id = auth_source ? auth_source.id : 0
 
             # set id to 0 (as opposed to nil) to produce an auth source not found

@@ -118,7 +118,7 @@ module AuthSourceSSO
   end
 
   def create_user_from_auth_source(login, save:)
-    attrs = AuthSource.find_user(login)
+    attrs = LdapAuthSource.find_user(login)
     return unless attrs
 
     attrs[:login] = login

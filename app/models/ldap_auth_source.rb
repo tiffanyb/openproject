@@ -28,7 +28,21 @@
 
 require 'net/ldap'
 
-class LdapAuthSource < AuthSource
+class LdapAuthSource < ApplicationRecord
+  self.table_name = 'auth_sources'
+
+  include Redmine::Ciphering
+
+  def self.unique_attribute
+    :name
+  end
+  prepend ::Mixins::UniqueFinder
+
+  has_many :users, foreign_key: 'auth_source_id'
+  has_many :ldap_groups_synchronized_groups,
+           class_name: '::LdapGroups::SynchronizedGroup',
+           dependent: :destroy
+
   enum tls_mode: {
     plain_ldap: 0,
     simple_tls: 1,
@@ -41,6 +55,10 @@ class LdapAuthSource < AuthSource
   }, _prefix: true
   validates :user_mode, inclusion: { in: user_modes.keys }
 
+  validates :name,
+            uniqueness: { case_sensitive: false },
+            length: { maximum: 60 }
+
   validates_presence_of :host, :port, :attr_login
   validates_length_of :name, :host, maximum: 60, allow_nil: true
   validates_length_of :account, :account_password, :base_dn, maximum: 255, allow_nil: true
@@ -51,6 +69,48 @@ class LdapAuthSource < AuthSource
 
   before_validation :strip_ldap_attributes
   after_initialize :set_default_port
+
+  # Try to authenticate a user not yet registered against available sources
+  def self.authenticate(login, password)
+    LdapAuthSource.where(user_mode: %i[onthefly_register synchronize]).find_each do |source|
+      begin
+        Rails.logger.debug { "Authenticating '#{login}' against '#{source.name}'" }
+        attrs = source.authenticate(login, password)
+      rescue StandardError => e
+        Rails.logger.error "Error during authentication: #{e.message}"
+        attrs = nil
+      end
+      return attrs if attrs
+    end
+    nil
+  end
+
+  def self.find_user(login)
+    LdapAuthSource.where(user_mode: %i[onthefly_register synchronize]).find_each do |source|
+      begin
+        Rails.logger.debug { "Looking up '#{login}' in '#{source.name}'" }
+        attrs = source.find_user login
+      rescue StandardError => e
+        Rails.logger.error "Error during authentication: #{e.message}"
+        attrs = nil
+      end
+
+      return attrs if attrs
+    end
+    nil
+  end
+
+  def account_password
+    read_ciphered_attribute(:account_password)
+  end
+
+  def account_password=(arg)
+    write_ciphered_attribute(:account_password, arg)
+  end
+
+  def allow_password_changes?
+    self.class.allow_password_changes?
+  end
 
   def authenticate(login, password)
     return nil if login.blank? || password.blank?

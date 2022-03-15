@@ -1498,9 +1498,9 @@ en:
   label_attachment_plural: "Files"
   label_attribute: "Attribute"
   label_attribute_plural: "Attributes"
-  label_auth_source: "Authentication mode"
-  label_auth_source_new: "New authentication mode"
-  label_auth_source_plural: "Authentication modes"
+  label_auth_source: "LDAP connection"
+  label_auth_source_new: "New LDAP connection"
+  label_auth_source_plural: "LDAP connections"
   label_authentication: "Authentication"
   label_available_project_work_package_categories: 'Available work package categories'
   label_available_project_work_package_types: 'Available work package types'

@@ -132,6 +132,6 @@ module UsersHelper
   end
 
   def can_users_have_auth_source?
-    AuthSource.any? && !OpenProject::Configuration.disable_password_login?
+    LdapAuthSource.any? && !OpenProject::Configuration.disable_password_login?
   end
 end

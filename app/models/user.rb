@@ -53,7 +53,9 @@ class User < Principal
      inverse_of: :user
   has_one :rss_token, class_name: '::Token::RSS', dependent: :destroy
   has_one :api_token, class_name: '::Token::API', dependent: :destroy
-  belongs_to :auth_source
+  belongs_to :auth_source,
+             class_name: 'LdapAuthSource',
+             foreign_key: 'auth_source_id'
 
   # Authorized OAuth grants
   has_many :oauth_grants,
@@ -69,6 +71,11 @@ class User < Principal
   has_many :meeting_participants,
            class_name: 'MeetingParticipant',
            inverse_of: :user,
+           dependent: :destroy
+
+  # LDAP group memberships
+  has_many :ldap_groups_memberships,
+           class_name: '::LdapGroups::Membership',
            dependent: :destroy
 
   has_many :notification_settings, dependent: :destroy
@@ -232,7 +239,7 @@ class User < Principal
   def self.try_authentication_and_create_user(login, password)
     return nil if OpenProject::Configuration.disable_password_login?
 
-    attrs = AuthSource.authenticate(login, password)
+    attrs = LdapAuthSource.authenticate(login, password)
     return unless attrs
 
     call = Users::CreateService

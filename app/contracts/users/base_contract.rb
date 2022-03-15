@@ -84,7 +84,7 @@ module Users
     end
 
     def existing_auth_source
-      if auth_source_id && AuthSource.find_by_unique(auth_source_id).nil?
+      if auth_source_id && LdapAuthSource.find_by_unique(auth_source_id).nil?
         errors.add :auth_source, :error_not_found
       end
     end
