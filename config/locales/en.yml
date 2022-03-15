@@ -137,11 +137,6 @@ en:
       filter_string_concat: |
         OpenProject will always filter for the login attribute provided by the user to identify the record. If you provide a filter here,
         it will be concatenated with an AND. By default, a catch-all (objectClass=*) will be used as a filter.
-      onthefly_register: |
-        If you check this box, OpenProject will automatically create new users from their LDAP entries
-        when they first authenticate with OpenProject.
-        Leave this unchecked to only allow existing accounts in OpenProject to authenticate through LDAP!
-
     connection_encryption: 'Connection encryption'
     system_account: 'System account'
     system_account_legend: |
@@ -152,6 +147,23 @@ en:
     user_settings_legend: |
       The following fields are related to how users are created in OpenProject from LDAP entries and
       what LDAP attributes are used to define the attributes of an OpenProject user (attribute mapping).
+    user_synchronization_mode:
+      summary: |
+        This section concerns the user synchronization mode of this LDAP connection.
+        You can optionally select to create users on the fly during login, or automatically synchronize them regularly.
+      title: 'User synchronization'
+      manual: 'None'
+      manual_description: |
+        Do not automatically create or synchronize users.
+        Select this to only allow existing accounts in OpenProject to authenticate through LDAP.
+      onthefly_register: 'Create users from LDAP on first login'
+      onthefly_register_description: |
+        If you select this mode, OpenProject will automatically create new users from their LDAP entries
+        when they first authenticate with OpenProject.
+      synchronize: 'Synchronize all matching users'
+      synchronize_description: |
+        Automatically synchronize all users within the set Base DN and matched by the above filter criteria.
+        This synchronization will be performed regularily every hour. This option also includes onthefly registration.
     tls_mode:
       plain: 'none'
       simple_tls: 'simple_tls'

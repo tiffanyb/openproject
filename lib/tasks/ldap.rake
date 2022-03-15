@@ -141,6 +141,13 @@ namespace :ldap do
       puts "LDAP auth source #{args[:name]} already exists. Updating its attributes instead."
     end
 
+    user_mode =
+      if ActiveModel::Type::Boolean.new.cast(args[:onthefly])
+        'onthefly_register'
+      else
+        args.fetch(:user_mode, 'manual')
+      end
+
     source.attributes = {
       host: url.host,
       port: url.port,
@@ -148,7 +155,7 @@ namespace :ldap do
       account: url.user,
       account_password: url.password,
       base_dn: url.dn,
-      onthefly_register: !!ActiveModel::Type::Boolean.new.cast(args[:onthefly]),
+      user_mode: user_mode,
       attr_login: args[:map_login],
       attr_firstname: args[:map_firstname],
       attr_lastname: args[:map_lastname],

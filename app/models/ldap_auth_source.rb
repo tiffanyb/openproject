@@ -29,8 +29,17 @@
 require 'net/ldap'
 
 class LdapAuthSource < AuthSource
-  enum tls_mode: %w[plain_ldap simple_tls start_tls]
+  enum tls_mode: {
+    plain_ldap: 0,
+    simple_tls: 1,
+    start_tls: 2
+  }, _prefix: true
   validates :tls_mode, inclusion: { in: tls_modes.keys }
+
+  enum user_mode: {
+    manual: 0, onthefly_register: 1, synchronize: 2
+  }, _prefix: true
+  validates :user_mode, inclusion: { in: user_modes.keys }
 
   validates_presence_of :host, :port, :attr_login
   validates_length_of :name, :host, maximum: 60, allow_nil: true
@@ -121,6 +130,10 @@ class LdapAuthSource < AuthSource
 
   def parsed_filter_string
     Net::LDAP::Filter.from_rfc2254(filter_string) if filter_string.present?
+  end
+
+  def onthefly_register?
+    user_mode_onthefly_register? || user_mode_synchronize?
   end
 
   private

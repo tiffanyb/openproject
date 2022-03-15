@@ -133,11 +133,39 @@ See COPYRIGHT and LICENSE files for more details.
       <p><%= t('ldap_auth_sources.attribute_texts.filter_string_concat') %></p>
     </div>
   </div>
+</fieldset>
+
+<fieldset class="form--fieldset">
+  <legend class="form--fieldset-legend"><%= t('ldap_auth_sources.user_synchronization_mode.title') %></legend>
+  <p>
+    <%= t 'ldap_auth_sources.user_synchronization_mode.summary' %>
+  </p>
   <div class="form--field">
-    <%= f.check_box 'onthefly_register', label: AuthSource.human_attribute_name(:onthefly) %>
-    <div class="form--field-instructions">
-      <p><%= t('ldap_auth_sources.attribute_texts.onthefly_register') %></p>
-    </div>
+    <%= f.radio_button :user_mode,
+                       :manual,
+                       label: t('ldap_auth_sources.user_synchronization_mode.manual'),
+                       container_class: '-wide' %>
+    <p class="form--field-instructions">
+      <%= t('ldap_auth_sources.user_synchronization_mode.manual_description') %>
+    </p>
+  </div>
+  <div class="form--field">
+    <%= f.radio_button :user_mode,
+                       :onthefly_register,
+                       label: t('ldap_auth_sources.user_synchronization_mode.onthefly_register'),
+                       container_class: '-wide' %>
+    <p class="form--field-instructions">
+      <%= t('ldap_auth_sources.user_synchronization_mode.onthefly_register_description') %>
+    </p>
+  </div>
+  <div class="form--field">
+    <%= f.radio_button :user_mode,
+                       :synchronize,
+                       label: t('ldap_auth_sources.user_synchronization_mode.synchronize'),
+                       container_class: '-wide' %>
+    <p class="form--field-instructions">
+      <%= t('ldap_auth_sources.user_synchronization_mode.synchronize_description') %>
+    </p>
   </div>
 </fieldset>
 
