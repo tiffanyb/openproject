@@ -163,6 +163,7 @@ en:
       synchronize: 'Synchronize all matching users'
       synchronize_description: |
         Automatically synchronize all users within the set Base DN and matched by the above filter criteria.
+        New users will be added to OpenProject and their status set to locked if they are no longer found through LDAP.
         This synchronization will be performed regularily every hour. This option also includes onthefly registration.
     tls_mode:
       plain: 'none'

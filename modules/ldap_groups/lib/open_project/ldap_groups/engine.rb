@@ -19,7 +19,5 @@ module OpenProject::LdapGroups
            last: true,
            caption: ->(*) { I18n.t('ldap_groups.label_menu_item') }
     end
-
-    add_cron_jobs { LdapGroups::SynchronizationJob }
   end
 end

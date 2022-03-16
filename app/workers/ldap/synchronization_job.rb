@@ -26,20 +26,32 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-module LdapGroups
+module Ldap
   class SynchronizationJob < ::Cron::CronJob
-    # Run every 30 minutes
-    self.cron_expression = '*/30 * * * *'
+    # Run every hour at 12 minutes
+    self.cron_expression = '12 * * * *'
 
     def perform
-      return unless EnterpriseToken.allows_to?(:ldap_groups)
-      return if skipped?
-
-      ::LdapGroups::SynchronizationService.synchronize!
+      run_user_sync
+      run_group_sync
     end
 
-    def skipped?
-      OpenProject::Configuration.ldap_groups_disable_sync_job?
+    private
+
+    def run_user_sync
+      return if OpenProject::Configuration.ldap_users_disable_sync_job?
+
+      ::LdapAuthSource.user_mode_synchronize.find_each do |ldap|
+        Rails.logger.info { "[LDAP groups] Synchronizing users for LDAP connection #{ldap.name}" }
+        ::Ldap::SynchronizeUsersService.new(ldap).perform
+      end
+    end
+
+    def run_group_sync
+      return unless EnterpriseToken.allows_to?(:ldap_groups)
+      return if OpenProject::Configuration.ldap_groups_disable_sync_job?
+
+      ::LdapGroups::SynchronizationService.synchronize!
     end
   end
 end

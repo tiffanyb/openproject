@@ -38,7 +38,13 @@ namespace :ldap_groups do
     task :ldap_server do
       require 'ladle'
       ldif = ENV['LDIF_FILE'] || Rails.root.join('spec/fixtures/ldap/users.ldif')
-      ldap_server = Ladle::Server.new(quiet: false, port: '12389', domain: 'dc=example,dc=com', ldif: ldif).start
+      ldap_server = Ladle::Server.new(
+        quiet: false,
+        port: '12389',
+        domain: 'dc=example,dc=com',
+        ldif: ldif,
+        timeout: 500,
+      ).start
 
       puts <<~EOS
                 #{'        '}
