@@ -123,7 +123,7 @@ class WorkPackages::UpdateService < ::BaseServices::BaseCallable
   def delete_relations(work_packages)
     unless Setting.cross_project_work_package_relations?
       Relation
-        .non_hierarchy_of_work_package(work_packages)
+        .of_work_package(work_packages)
         .destroy_all
     end
   end
