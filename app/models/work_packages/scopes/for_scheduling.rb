@@ -43,11 +43,12 @@ module WorkPackages::Scopes
       #
       # The children themselves are scheduled manually if all of their children are scheduled manually which repeats itself down to the leaf
       # work packages. So another way of putting it, and that is how the sql statement works, is that a work package is considered to
-      # be scheduled manually if *all* of the paths to their leafs have at least one work package that is scheduled manually.
+      # be scheduled manually if *all* of its descendants are scheduled manually.
       # For example in case of the hierarchy:
       # A and B <- hierarchy (C is parent of both A and B) - C <- hierarchy - D
       # if A and B are both scheduled manually, C is also scheduled manually and so is D. But if only A is scheduled manually,
-      # B, C and D are scheduled automatically.
+      # B, C and D are scheduled automatically. If only C is scheduled manually, then D is still scheduled automatically since
+      # A and B are scheduled manually.
       #
       # The recursiveness will of course also stop if no more work packages can be added.
       #
@@ -125,7 +126,7 @@ module WorkPackages::Scopes
 
             SELECT
               relations.from_id id,
-              scheduling.manually
+              (related_work_packages.schedule_manually OR COALESCE(descendants.manually, false)) manually
             FROM
               to_schedule
             JOIN LATERAL
@@ -149,46 +150,24 @@ module WorkPackages::Scopes
                   work_package_hierarchies
                 WHERE
                   NOT to_schedule.manually
+                  AND work_package_hierarchies.generations = 1
                   AND (work_package_hierarchies.ancestor_id = to_schedule.id
                        OR work_package_hierarchies.descendant_id = to_schedule.id)
               ) relations ON relations.to_id = to_schedule.id
+            LEFT JOIN work_packages related_work_packages
+              ON relations.from_id = related_work_packages.id
             LEFT JOIN LATERAL (
               SELECT
-                work_package_id,
-                bool_and(manually) manually
-              FROM
-              (
-                SELECT
-                  origin.ancestor_id work_package_id,
-                  origin.descendant_id leaf_id,
-                  bool_or(leaves_wp.schedule_manually OR up_wp.schedule_manually) manually
-                FROM
-                  work_package_hierarchies origin
-                JOIN
-                  work_package_hierarchies down
-                ON
-                  origin.ancestor_id = down.ancestor_id
-                JOIN
-                  work_package_hierarchies up
-                ON
-                  origin.descendant_id = up.descendant_id
-                  AND down.descendant_id = up.ancestor_id
-                JOIN
-                  work_packages leaves_wp
-                ON leaves_wp.id = origin.descendant_id
-                JOIN
-                  work_packages up_wp
-                ON up_wp.id = up.ancestor_id
-                WHERE EXISTS (
-                  SELECT ancestor_id
-                  FROM work_package_hierarchies leaves
-                  GROUP BY ancestor_id
-                  HAVING MAX(generations) = 0 AND leaves.ancestor_id = origin.descendant_id
-                ) AND origin.ancestor_id = relations.from_id
-                GROUP BY origin.ancestor_id, origin.descendant_id
-              ) scheduling
-              GROUP BY work_package_id
-            ) scheduling ON scheduling.work_package_id = relations.from_id
+                descendant_hierarchies.ancestor_id from_id,
+                bool_and(COALESCE(descendant_work_packages.schedule_manually, false)) manually
+              FROM work_package_hierarchies descendant_hierarchies
+              JOIN work_packages descendant_work_packages
+              ON
+                descendant_hierarchies.ancestor_id = relations.from_id
+                AND descendant_hierarchies.generations > 0
+                AND descendant_hierarchies.descendant_id = descendant_work_packages.id
+              GROUP BY descendant_hierarchies.ancestor_id
+            ) descendants ON related_work_packages.id = descendants.from_id
           )
         SQL
       end

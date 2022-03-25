@@ -209,7 +209,7 @@ describe WorkPackages::Scopes::ForScheduling, 'allowed scope' do
       let!(:existing_work_packages) { [successor, successor_child, successor_parent, successor_successor] }
 
       before do
-        create(:hierarchy_relation, from: successor_parent, to: successor_successor)
+        successor_successor.update(parent: successor_parent)
       end
 
       context 'with all scheduled automatically' do
@@ -435,9 +435,9 @@ describe WorkPackages::Scopes::ForScheduling, 'allowed scope' do
           successor_child.update_column(:schedule_manually, true)
         end
 
-        it 'is empty' do
+        it 'contains the successor' do
           expect(WorkPackage.for_scheduling([origin]))
-            .to be_empty
+            .to match_array [successor]
         end
       end
     end
@@ -473,6 +473,19 @@ describe WorkPackages::Scopes::ForScheduling, 'allowed scope' do
           successor_grandchild2.update_column(:schedule_manually, true)
         end
 
+        it 'includes successor' do
+          expect(WorkPackage.for_scheduling([origin]))
+            .to match_array([successor])
+        end
+      end
+
+      context 'with both of the successor\'s grandchildren and child scheduled manually' do
+        before do
+          successor_child.update_column(:schedule_manually, true)
+          successor_grandchild.update_column(:schedule_manually, true)
+          successor_grandchild2.update_column(:schedule_manually, true)
+        end
+
         it 'is empty' do
           expect(WorkPackage.for_scheduling([origin]))
             .to be_empty
@@ -484,9 +497,9 @@ describe WorkPackages::Scopes::ForScheduling, 'allowed scope' do
           successor_child.update_column(:schedule_manually, true)
         end
 
-        it 'is empty' do
+        it 'contains the successor' do
           expect(WorkPackage.for_scheduling([origin]))
-            .to be_empty
+            .to match_array [successor]
         end
       end
     end
