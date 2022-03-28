@@ -298,7 +298,7 @@ class User < Principal
   end
 
   def register
-    self.status = self.class.statuses[:registered]
+    self.status = self.class.statuses[:active]
   end
 
   def invite
