@@ -157,30 +157,30 @@ shared_examples 'has a project include dropdown', type: :feature, js: true do
 
     dropdown.click_button 'Apply'
     dropdown.expect_closed
-    dropdown.expect_count 2
+    dropdown.expect_count 4
 
     dropdown.toggle!
 
     dropdown.toggle_checkbox(sub_sub_project.id)
     dropdown.click_button 'Apply'
     dropdown.expect_closed
-    dropdown.expect_count 3
+    dropdown.expect_count 4
 
     page.refresh
 
-    dropdown.expect_count 3
+    dropdown.expect_count 4
 
     dropdown.toggle!
 
     dropdown.expect_checkbox(project.id, true)
     dropdown.expect_checkbox(other_project.id, true)
-    dropdown.expect_checkbox(sub_project.id)
+    dropdown.expect_checkbox(sub_project.id, true)
     dropdown.expect_checkbox(sub_sub_project.id, true)
 
     dropdown.toggle_checkbox(sub_sub_project.id)
     dropdown.click_button 'Apply'
     dropdown.expect_closed
-    dropdown.expect_count 2
+    dropdown.expect_count 4
   end
 
   it 'can clear the selection' do
@@ -199,7 +199,7 @@ shared_examples 'has a project include dropdown', type: :feature, js: true do
 
     dropdown.click_button 'Apply'
     dropdown.expect_closed
-    dropdown.expect_count 3
+    dropdown.expect_count 4
 
     dropdown.toggle!
 
