@@ -44,12 +44,6 @@ wclass = local_assigns[:wide] ? 'wide' : ''
 <% if auth_provider_html.strip != '' %>
   <div class="login-auth-providers <%= pclass %> <%= wclass %>">
     <% unless no_pwd %>
-      <h3 class="login-auth-providers-title"><span>
-          <%= local_assigns[:omniauth_title] || I18n.t('account.login_with_auth_provider')%>
-        </span></h3>
     <% end %>
-    <div class="login-auth-provider-list">
-      <%= auth_provider_html %>
-    </div>
   </div>
 <% end %>
