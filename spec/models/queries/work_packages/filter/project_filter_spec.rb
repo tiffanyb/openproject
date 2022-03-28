@@ -108,7 +108,7 @@ describe Queries::WorkPackages::Filter::ProjectFilter, type: :model do
     describe '#value_objects' do
       let(:selected) { visible_projects.first }
       let(:visible_descendants) { [] }
-      let(:descendants) { double('Project', visible: visible_descendants)} # rubocop:disable RSpec/VerifiedDoubles
+      let(:descendants) { double('Project', visible: visible_descendants) } # rubocop:disable RSpec/VerifiedDoubles
 
       before do
         allow(selected).to receive(:descendants).and_return(descendants)
