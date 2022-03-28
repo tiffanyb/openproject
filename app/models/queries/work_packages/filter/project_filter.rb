@@ -61,6 +61,15 @@ class Queries::WorkPackages::Filter::ProjectFilter < Queries::WorkPackages::Filt
     values
       .flat_map { |project_id| expanded_subprojects(available_projects[project_id.to_i]) }
       .compact
+      .uniq
+  end
+
+  def values_replaced
+    value_objects.map(&:id)
+  end
+
+  def where
+    operator_strategy.sql_for_field(values_replaced, self.class.model.table_name, :project_id)
   end
 
   private
@@ -76,9 +85,9 @@ class Queries::WorkPackages::Filter::ProjectFilter < Queries::WorkPackages::Filt
     return if selected_project.nil?
 
     if context.include_subprojects?
-      [selected_project]
-    else
       [selected_project].concat(selected_project.descendants.visible)
+    else
+      [selected_project]
     end
   end
 end

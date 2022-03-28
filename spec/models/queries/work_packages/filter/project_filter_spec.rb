@@ -106,13 +106,31 @@ describe Queries::WorkPackages::Filter::ProjectFilter, type: :model do
     end
 
     describe '#value_objects' do
+      let(:selected) { visible_projects.first }
+      let(:visible_descendants) { [] }
+      let(:descendants) { double('project', visible: visible_descendants) }
+
       before do
-        instance.values = [visible_projects.first.id.to_s]
+        allow(selected)
+          .to receive(:descendants)
+          .and_return(descendants)
+
+        instance.values = [selected.id.to_s]
       end
 
       it 'returns an array of projects' do
         expect(instance.value_objects)
-          .to match_array([visible_projects.first])
+          .to match_array([selected])
+      end
+
+      context 'with a visible child' do
+        let(:child) { build_stubbed(:project, parent: selected, id: 2134) }
+        let(:visible_descendants) { [child] }
+
+        it 'returns an array of projects' do
+          expect(instance.value_objects)
+            .to match_array([selected, child])
+        end
       end
     end
   end
