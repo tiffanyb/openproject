@@ -31,7 +31,7 @@ class Queries::WorkPackages::Filter::ParentFilter <
   include ::Queries::WorkPackages::Filter::FilterForWpMixin
 
   def relation_type
-    # While this is not a relation (in the sense of it being stored in a different database) we still
+    # While this is not a relation (in the sense of it being stored in a different database table) we still
     # want it to be used same as every other relation filter.
     Relation::TYPE_HIERARCHY
   end

@@ -1,124 +1,102 @@
+#-- copyright
+# OpenProject is an open source project management software.
+# Copyright (C) 2012-2022 the OpenProject GmbH
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License version 3.
+#
+# OpenProject is a fork of ChiliProject, which is a fork of Redmine. The copyright follows:
+# Copyright (C) 2006-2013 Jean-Philippe Lang
+# Copyright (C) 2010-2013 the ChiliProject Team
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# See COPYRIGHT and LICENSE files for more details.
+#++
+
 class AddParentIdToWp < ActiveRecord::Migration[6.1]
-  # This migration handles two cases:
-  #   * migrating from OP pre 7.4 (which includes setting up a new instance)
-  #   * migrating from OP between 7.4 and 12.0
-  #
-  # For the former, the usage of typed_dag is ignored throughout the migrations and as such,
-  # the tables will have the following layout:
-  # work_packages:
-  #   parent_id - integer
-  #   root_id - integer
-  #   lft - integer
-  #   rgt - integer
-  #   ...(other non relevant columns)
-  #
-  # relations:
-  #   from_id - integer
-  #   to_id - integer
-  #   relation_type - varchar
-  #   delay - varchar
-  #   description - varchar
-  #
-  # In case migrating from OP between 7.4 and 12.0 typed_dag was in place and the tables
-  # will have the following layout:
-  # work_packages:
-  #   ...(other non relevant columns)
-  #
-  # relations:
-  #   from_id - integer
-  #   to_id - integer
-  #   hierarchy - integer
-  #   relates - integer
-  #   follows - integer
-  #   blocks - integer
-  #   includes - integer
-  #   requires - integer
-  #   duplicates - integer
-  #   count - integer
-  #   delay - varchar
-  #   description - varchar
+  RELATION_TYPES = %i[relates duplicates blocks follows includes requires hierarchy].freeze
+
   def up
-    if column_exists? :work_packages, :parent_id
-      up_from_pre_typed_dag
-    else
-      up_from_typed_dag
-    end
+    add_parent_id
+
+    add_relation_type
 
     add_relation_index
 
     add_closure_tree_table
 
-    WorkPackage.rebuild!
+    ClosureTreeWorkPackage.rebuild!
+
+    cleanup_transitive_relations
+
+    remove_typed_dag_columns
   end
 
   def down
-    # TODO
+    add_relation_type_column
+
+    update_relation_column_from_relation_type
+
+    insert_hierarchy_relation_for_parent
+
+    remove_closure_tree
+
+    remove_closure_tree_columns_on_foreign_tables
+
+    build_typed_dag
   end
 
   private
 
-  def up_from_pre_typed_dag
-    remove_nested_set_columns
+  def add_parent_id
+    add_column :work_packages, :parent_id, :integer, null: true
+
+    add_parent_index
+
+    execute <<~SQL.squish
+      UPDATE
+        work_packages
+      SET
+        parent_id = from_id
+      FROM relations
+      WHERE
+        hierarchy = 1
+        AND relates = 0
+        AND duplicates = 0
+        AND blocks = 0
+        AND follows = 0
+        AND includes = 0
+        AND requires = 0
+        AND work_packages.id = relations.to_id
+    SQL
   end
 
-  def up_from_typed_dag
-    add_column :work_packages, :parent_id, :integer
+  def add_relation_type
+    add_column :relations, :relation_type, :string
 
-    reversible do |dir|
-      dir.up do
-        execute <<~SQL.squish
-          UPDATE
-            work_packages
-          SET
-            parent_id = from_id
-          FROM relations
-          WHERE
-            hierarchy = 1
-            AND relates = 0
-            AND duplicates = 0
-            AND blocks = 0
-            AND follows = 0
-            AND includes = 0
-            AND requires = 0
-            AND work_packages.id = relations.to_id
-        SQL
-      end
-    end
-
-    remove_column :relations, :hierarchy, type: :integer
-
-    reversible do |dir|
-      dir.down do
-        execute <<~SQL.squish
-          DELETE FROM relations
-          WHERE hierarchy > 0
-        SQL
-        # supports relying on fast "Index Only Scan" for finding work packages that need to be rescheduled after a work package
-        # has been moved
-        add_index :relations,
-                  %i(to_id hierarchy follows from_id),
-                  name: 'index_relations_hierarchy_follows_scheduling',
-                  where: <<~SQL.squish
-                    relations.relates = 0
-                    AND relations.duplicates = 0
-                    AND relations.blocks = 0
-                    AND relations.includes = 0
-                    AND relations.requires = 0
-                    AND (hierarchy + relates + duplicates + follows + blocks + includes + requires > 0)
-                  SQL
-
-        add_index :relations,
-                  %i(from_id to_id hierarchy),
-                  name: 'index_relations_only_hierarchy',
-                  where: <<~SQL.squish
-                    relations.relates = 0
-                    AND relations.duplicates = 0
-                    AND relations.follows = 0
-                    AND relations.blocks = 0
-                    AND relations.includes = 0
-                    AND relations.requires = 0
-                  SQL
-      end
+    (RELATION_TYPES - [:hierarchy]).each do |type|
+      execute <<~SQL.squish
+        UPDATE
+          relations
+        SET
+          relation_type = '#{type}'
+        WHERE
+          #{type} = 1
+          AND #{(RELATION_TYPES - [type]).join(' = 0 AND ')} = 0
+      SQL
     end
   end
 
@@ -146,9 +124,115 @@ class AddParentIdToWp < ActiveRecord::Migration[6.1]
               unique: true
   end
 
-  def remove_nested_set_columns
-    remove_column :work_packages, :root_id
-    remove_column :work_packages, :lft
-    remove_column :work_packages, :rgt
+  def add_parent_index
+    add_index :work_packages, :parent_id
   end
+
+  def add_relation_type_column
+    change_table :relations do |r|
+      RELATION_TYPES.each do |column|
+        r.column column, :integer, default: 0, null: false
+      end
+    end
+  end
+
+  def cleanup_transitive_relations
+    execute <<~SQL.squish
+      DELETE
+      FROM
+        relations
+      WHERE
+        #{RELATION_TYPES.join(' + ')} != 1
+    SQL
+  end
+
+  def remove_typed_dag_columns
+    RELATION_TYPES.each do |type|
+      remove_column :relations, type
+    end
+
+    remove_column :relations, :count
+  end
+
+  def update_relation_column_from_relation_type
+    ActiveRecord::Base.connection.execute <<-SQL
+      UPDATE
+        relations
+      SET
+        relates =    CASE
+                     WHEN relations.relation_type = 'relates'
+                     THEN 1
+                     ELSE 0
+                     END,
+        duplicates = CASE
+                     WHEN relations.relation_type = 'duplicates'
+                     THEN 1
+                     ELSE 0
+                     END,
+        blocks =     CASE
+                     WHEN relations.relation_type = 'blocks'
+                     THEN 1
+                     ELSE 0
+                     END,
+        follows =    CASE
+                     WHEN relations.relation_type = 'precedes'
+                     THEN 1
+                     ELSE 0
+                     END,
+        includes =   CASE
+                     WHEN relations.relation_type = 'includes'
+                     THEN 1
+                     ELSE 0
+                     END,
+        requires =   CASE
+                     WHEN relations.relation_type = 'requires'
+                     THEN 1
+                     ELSE 0
+                     END
+    SQL
+  end
+
+  def remove_closure_tree
+    drop_table :work_package_hierarchies
+  end
+
+  def remove_closure_tree_columns_on_foreign_tables
+    remove_column :relations, :relation_type
+
+    remove_column :work_packages, :parent_id
+  end
+
+  def build_typed_dag
+    require_relative '20180105130053_rebuild_dag'
+
+    ::RebuildDag.new.up
+  end
+
+  def insert_hierarchy_relation_for_parent
+    ActiveRecord::Base.connection.execute <<-SQL.squish
+      INSERT INTO relations
+        (from_id, to_id, hierarchy)
+      SELECT w1.id, w2.id, 1
+      FROM work_packages w1
+      JOIN work_packages w2
+      ON w1.id = w2.parent_id
+    SQL
+  end
+
+  def set_count_to_1
+    ActiveRecord::Base.connection.execute <<-SQL
+      UPDATE
+        relations
+      SET
+        count = 1
+    SQL
+  end
+
+  # rubocop:disable Rails/ApplicationRecord
+  class ClosureTreeWorkPackage < ActiveRecord::Base
+    self.table_name = 'work_packages'
+
+    has_closure_tree
+  end
+  # rubocop:enable Rails/ApplicationRecord
 end
