@@ -96,7 +96,7 @@ class Relation < ApplicationRecord
   scope :of_work_package,
         ->(work_package) { where(from: work_package).or(where(to: work_package)) }
 
-  validates_numericality_of :delay, allow_nil: true
+  validates :delay, numericality: { allow_nil: true }
 
   validates :to, uniqueness: { scope: :from }
 
@@ -152,7 +152,7 @@ class Relation < ApplicationRecord
     self[:delay]
   end
 
-  TYPES.keys.each do |type|
+  TYPES.each_key do |type|
     define_method "#{type}?" do
       canonical_type == self.class.canonical_type(type)
     end

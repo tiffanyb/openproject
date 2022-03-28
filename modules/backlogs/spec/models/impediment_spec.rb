@@ -118,7 +118,7 @@ describe Impediment, type: :model do
           impediment.save
         end
 
-        it { expect(Impediment.find(impediment.id).blocks_ids).to eql [feature.id, task.id] }
+        it { expect(described_class.find(impediment.id).blocks_ids).to eql [feature.id, task.id] }
       end
     end
   end

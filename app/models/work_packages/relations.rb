@@ -50,12 +50,17 @@ module WorkPackages::Relations
              dependent: :nullify,
              inverse_of: :to
 
+    # Relations where the current work package follows another one.
+    # In this case,
+    #   * from is self.id
+    #   * to is the followed work package
     has_many :follows_relations,
              -> { where(relation_type: Relation::TYPE_FOLLOWS) },
              class_name: 'Relation',
              foreign_key: :from_id,
              autosave: true,
-             dependent: :nullify
+             dependent: :nullify,
+             inverse_of: :from
 
     # Relations where the current work package blocks another one.
     # In this case,
@@ -66,7 +71,8 @@ module WorkPackages::Relations
              class_name: 'Relation',
              foreign_key: :from_id,
              autosave: true,
-             dependent: :nullify
+             dependent: :nullify,
+             inverse_of: :from
 
     # Relations where the current work package duplicates another one.
     # In this case,
@@ -77,7 +83,8 @@ module WorkPackages::Relations
              class_name: 'Relation',
              foreign_key: :from_id,
              autosave: true,
-             dependent: :nullify
+             dependent: :nullify,
+             inverse_of: :from
 
     # Relations where the current work package is duplicated by another one.
     # In this case,

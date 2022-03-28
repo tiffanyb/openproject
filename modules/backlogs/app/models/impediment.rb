@@ -39,13 +39,13 @@ class Impediment < Task
   end
 
   def blocks_ids=(ids)
-    @blocks_ids_list = [ids] if ids.is_a?(Integer)
-    @blocks_ids_list = ids.split(/\D+/).map(&:to_i) if ids.is_a?(String)
-    @blocks_ids_list = ids.map(&:to_i) if ids.is_a?(Array)
+    @blocks_ids = [ids] if ids.is_a?(Integer)
+    @blocks_ids = ids.split(/\D+/).map(&:to_i) if ids.is_a?(String)
+    @blocks_ids = ids.map(&:to_i) if ids.is_a?(Array)
   end
 
   def blocks_ids
-    @blocks_ids_list ||= blocks_relations.map(&:to_id)
+    @blocks_ids ||= blocks_relations.map(&:to_id)
   end
 
   private
@@ -57,7 +57,7 @@ class Impediment < Task
   end
 
   def validate_blocks_list
-    if blocks_ids.size == 0
+    if blocks_ids.empty?
       errors.add :blocks_ids, :must_block_at_least_one_work_package
     else
       other_version_ids = WorkPackage.where(id: blocks_ids).pluck(:version_id).uniq

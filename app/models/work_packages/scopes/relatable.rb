@@ -55,7 +55,7 @@ module WorkPackages::Scopes
             #{non_relatable_paths_sql(work_package, relation_type)}
 
             SELECT id
-            FROM #{RELATED_CTE_NAME}
+            FROM #{related_cte_name}
         SQL
 
         scope = where("work_packages.id NOT IN (#{sql})")
@@ -65,8 +65,12 @@ module WorkPackages::Scopes
           # This only works because an ancestor cannot be already linked to its work package.
           # The #parent_id field of the work package cannot be trusted at this point since it might have
           # an unpersisted change.
+          ancestors_without_parent = WorkPackageHierarchy
+                                       .where(descendant_id: work_package.id)
+                                       .where('generations > 1')
+
           scope
-            .or(where(id: WorkPackageHierarchy.where(descendant_id: work_package.id).where('generations > 1').select(:ancestor_id)))
+            .or(where(id: ancestors_without_parent.select(:ancestor_id)))
         else
           scope
         end
@@ -74,11 +78,9 @@ module WorkPackages::Scopes
 
       private
 
-      RELATED_CTE_NAME = 'related'.freeze
-
       def non_relatable_paths_sql(work_package, relation_type)
         <<~SQL.squish
-          #{RELATED_CTE_NAME} (id, from_hierarchy) AS (
+          #{related_cte_name} (id, from_hierarchy) AS (
 
               #{non_recursive_relatable_values(work_package)}
 
@@ -88,7 +90,7 @@ module WorkPackages::Scopes
                 relations.id,
                 relations.from_hierarchy
               FROM
-                #{RELATED_CTE_NAME}
+                #{related_cte_name}
               JOIN LATERAL (
                 #{joined_existing_connections(relation_type)}
               ) relations ON 1 = 1
@@ -97,9 +99,13 @@ module WorkPackages::Scopes
       end
 
       def non_recursive_relatable_values(work_package)
-        <<~SQL.squish
-          SELECT * FROM (VALUES(#{work_package.id}, false)) AS t(id, from_hierarchy)
+        sql = <<~SQL.squish
+          SELECT * FROM (VALUES(:id, false)) AS t(id, from_hierarchy)
         SQL
+
+        ::OpenProject::SqlSanitization
+          .sanitize sql,
+                    id: work_package.id
       end
 
       def joined_existing_connections(relation_type)
@@ -130,14 +136,18 @@ module WorkPackages::Scopes
                                    %w[to_id from_id]
                                  end
 
-        <<~SQL.squish
+        sql = <<~SQL.squish
           SELECT
             #{direction1} id,
             false from_hierarchy
           FROM
             relations
-          WHERE (relations.#{direction2} = #{RELATED_CTE_NAME}.id AND relations.relation_type = '#{canonical_type}')
+          WHERE (relations.#{direction2} = #{related_cte_name}.id AND relations.relation_type = :relation_type)
         SQL
+
+        ::OpenProject::SqlSanitization
+          .sanitize sql,
+                    relation_type: canonical_type
       end
 
       def existing_hierarchy_lateral
@@ -152,9 +162,13 @@ module WorkPackages::Scopes
           FROM
             work_package_hierarchies
           WHERE
-            #{RELATED_CTE_NAME}.from_hierarchy = false AND
-            (work_package_hierarchies.ancestor_id = #{RELATED_CTE_NAME}.id OR work_package_hierarchies.descendant_id = #{RELATED_CTE_NAME}.id)
+            #{related_cte_name}.from_hierarchy = false AND
+            (work_package_hierarchies.ancestor_id = #{related_cte_name}.id OR work_package_hierarchies.descendant_id = #{related_cte_name}.id)
         SQL
+      end
+
+      def related_cte_name
+        'related'
       end
     end
   end

@@ -581,14 +581,13 @@ describe WorkPackages::BaseContract do
     context 'when self assigning' do
       let(:parent) { work_package }
 
-
       it 'returns an error for the parent' do
         expect(subject)
           .to eq [:cannot_be_self_assigned]
       end
     end
 
-    context 'the intended parent is not relatable' do
+    context 'when the intended parent is not relatable' do
       before do
         scope = instance_double('ActiveRecord::Relation')
 
