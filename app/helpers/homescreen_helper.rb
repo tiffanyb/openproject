@@ -30,7 +30,8 @@ module HomescreenHelper
   ##
   # Homescreen name
   def organization_name
-    Setting.app_title || Setting.software_name
+    'Mechanical Tiger'
+    #Setting.app_title || Setting.software_name
   end
 
   ##
