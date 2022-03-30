@@ -41,7 +41,7 @@ module DevelopmentData
 
       puts '   -Linking custom fields.'
 
-      link_custom_fields(projects.detect { |p| p.identifier == 'dev-custom-fields' })
+      #link_custom_fields(projects.detect { |p| p.identifier == 'dev-custom-fields' })
     end
 
     def applicable?
@@ -49,7 +49,7 @@ module DevelopmentData
     end
 
     def project_identifiers
-      %w(dev-empty dev-large dev-large-child dev-custom-fields)
+      %w(chess_challenge empty)
     end
 
     def reset_projects
@@ -57,10 +57,13 @@ module DevelopmentData
       project_identifiers.map do |id|
         project = Project.new project_data(id)
 
-        if id == 'dev-large-child'
-          project.parent_id = Project.find_by(identifier: 'dev-large').id
+        # do not show the chess challenge template as that's the default template
+        if id == "chess_challenge"
+          project.active = false;
         end
 
+        # set both projects as tempalte 
+        project.templated = true;
         project.save!
         project
       end
@@ -105,7 +108,7 @@ module DevelopmentData
     end
 
     def project_modules
-      Setting.default_projects_modules - %w(news wiki meetings calendar)
+      Setting.default_projects_modules - %w(wiki work-packges)
     end
   end
 end

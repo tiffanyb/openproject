@@ -46,6 +46,7 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
     'active',
   ];
 
+
   copyableTemplateFilter = new ApiV3FilterBuilder()
     .add('user_action', '=', ['projects/copy']) // no null values
     .add('templated', '=', true);
@@ -97,6 +98,7 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
     if (this.uIRouterGlobals.params.parent_id) {
       this.setParentAsPayload(this.uIRouterGlobals.params.parent_id);
     }
+    this.formUrl = '/api/v3/projects/1/copy';
   }
 
   onSubmitted(response:HalSource) {
@@ -140,6 +142,11 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
         parent: {
           href,
         },
+      },
+      name: null,
+      _meta: {
+        ...(this.initialPayload?._meta as Record<string, unknown>),
+        sendNotifications: false,
       },
     };
   }

@@ -108,6 +108,7 @@ module DemoData
     end
 
     def create_project(key)
+      puts "===============Current project is #{key}"
       Project.create! project_data(key)
     end
 
@@ -173,7 +174,9 @@ module DemoData
     end
 
     def seed_queries(project, key)
+      puts " ============= Queries for  #{key} project..."
       Array(project_data_for(key, 'queries')).each do |config|
+        puts " -------------------- config #{config}"
         QueryBuilder.new(config, project).create!
       end
     end
