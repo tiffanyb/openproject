@@ -46,11 +46,11 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
     'active',
   ];
 
-
   copyableTemplateFilter = new ApiV3FilterBuilder()
     .add('user_action', '=', ['projects/copy']) // no null values
+    .add('name_and_identifier', '!', ['chess-challenge'])  
     .add('templated', '=', true);
-
+  
   templateOptions$:Observable<ProjectTemplateOption[]> =
   this
     .apiV3Service
@@ -63,6 +63,9 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
     .pipe(
       map((response) => response.elements.map((el:HalResource) => ({ href: el.href, name: el.name }))),
     );
+
+  defaultTemplateFilter = new ApiV3FilterBuilder()
+    .add('name_and_identifier', '=', ['chess-challenge']);
 
   templateForm = new FormGroup({
     template: new FormControl(),
@@ -98,7 +101,16 @@ export class NewProjectComponent extends UntilDestroyedMixin implements OnInit {
     if (this.uIRouterGlobals.params.parent_id) {
       this.setParentAsPayload(this.uIRouterGlobals.params.parent_id);
     }
-    this.formUrl = '/api/v3/projects/1/copy';
+
+    this.apiV3Service
+      .projects
+      .filtered(this.defaultTemplateFilter)
+      .get()
+      .pipe(map((response) => response.elements[0].id))
+      .toPromise()
+      .then((res) => {
+        this.formUrl = `/api/v3/projects/${res}/copy`;
+      });
   }
 
   onSubmitted(response:HalSource) {
