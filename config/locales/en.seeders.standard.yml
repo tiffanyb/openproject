@@ -67,6 +67,7 @@ en:
                 type: default_type_task
             wiki: |
               This is a fake wiki
+            templated: true
           chess_challenge:
             name: Chess challenge
             identifier: chess-challenge
@@ -263,3 +264,4 @@ en:
                 type: default_type_task
             wiki: |
               Here we will share the finished tasks' results
+            templated: true

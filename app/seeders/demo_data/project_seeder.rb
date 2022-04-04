@@ -207,7 +207,8 @@ module DemoData
           description: project_description(key),
           enabled_module_names: project_modules(key),
           types: project_types,
-          parent_id: parent_project_id(key)
+          parent_id: parent_project_id(key),
+          templated: find_templated(key),
         }
       end
 
@@ -245,6 +246,13 @@ module DemoData
       def find_project(key)
         Project.find_by(identifier: project_identifier(key))
       end
+
+      def find_templated(key)
+        value = project_data_for(key, 'templated')
+        puts "!!!!!!! the template data is #{value}"
+        value
+      end
+
     end
 
     include Data

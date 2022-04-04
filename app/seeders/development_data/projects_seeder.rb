@@ -53,12 +53,15 @@ module DevelopmentData
     end
 
     def reset_projects
+      puts "---------------------RESETTING"
       Project.where(identifier: project_identifiers).destroy_all
       project_identifiers.map do |id|
         project = Project.new project_data(id)
 
+        puts "--------------------project id #{id}"
         # do not show the chess challenge template as that's the default template
-        if id == "chess_challenge"
+        if id == "chess-challenge"
+          puts "==================== project active is false"
           project.active = false;
         end
 

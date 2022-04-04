@@ -15,7 +15,7 @@ module DemoData
         overview_config(project_config)[:widgets].each do |widget_config|
           build_widget(overview, widget_config)
         end
-
+        
         overview.save!
       end
 
@@ -48,6 +48,7 @@ module DemoData
     end
 
     def create_attachments!(overview, attributes)
+      puts "attributes: #{attributes}"
       Array(attributes[:attachments]).each do |file_name|
         attachment = overview.attachments.build
         attachment.author = User.admin.first

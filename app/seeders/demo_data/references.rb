@@ -132,6 +132,7 @@ module DemoData
 
       str.gsub(/###{tag}(\.id)?:"[^"]+"/) do |match|
         identifier = match.split(":", 2).last[1..-2] # strip quotes of part behind :
+        puts "========================identifier: #{identifier}"
         instance = model.where(find_by => identifier, :project => project).first!
 
         if match.include?(".id")
