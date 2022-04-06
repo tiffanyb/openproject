@@ -79,7 +79,7 @@ module WorkPackages
                               assignable_responsibles
     end
 
-    attribute :mt_category_id
+    attribute :mtcategoryid
 
     attribute :schedule_manually
 

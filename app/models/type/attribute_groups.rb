@@ -47,19 +47,20 @@ module Type::AttributeGroups
         estimated_time: :estimates_and_time,
         spent_time: :estimates_and_time,
         priority: :details,
-        mt_category_id: :mt_category,
+        category: :mt_category,
+        mtcategoryid: :details,
       }
     end
 
     # All known default
     mattr_accessor :default_groups do
       {
+        mt_category: :label_mt_category,
         people: :label_people,
         estimates_and_time: :label_estimates_and_time,
         details: :label_details,
         other: :label_other,
         children: :'activerecord.attributes.work_package.children',
-        mt_category: :label_mt_category,
       }
     end
   end
@@ -119,8 +120,13 @@ module Type::AttributeGroups
   def default_attribute_groups
     values = work_package_attributes_by_default_group_key
 
+    puts("===================================================================================")
+    puts("values: #{values}")
+    puts("default groups: #{default_groups}")
     default_groups.keys.each_with_object([]) do |groupkey, array|
+      puts("GROUP KEY: #{groupkey}")
       members = values[groupkey]
+      puts("members: #{members}")
       array << [groupkey, members] if members.present?
     end
   end
@@ -168,6 +174,8 @@ module Type::AttributeGroups
   # it will put them into the other group.
   def work_package_attributes_by_default_group_key
     active_cfs = active_custom_field_attributes
+    puts("---------------------------------------------------------------")
+    puts("active_cfs: #{active_cfs}")
     work_package_attributes
       .keys
       .select { |key| default_attribute?(active_cfs, key) }
@@ -178,6 +186,7 @@ module Type::AttributeGroups
   # Custom fields should not get included into the default form configuration.
   # This method might get patched by modules.
   def default_attribute?(active_cfs, key)
+    puts("key: #{key}")
     !(CustomField.custom_field_attribute?(key) && !active_cfs.include?(key))
   end
 

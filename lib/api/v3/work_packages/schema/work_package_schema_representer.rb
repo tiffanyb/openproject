@@ -108,6 +108,10 @@ module API
           schema :id,
                  type: 'Integer'
 
+          schema :mtcategoryid,
+                 type: 'Integer',
+                 required: false
+
           schema :subject,
                  type: 'String',
                  min_length: 1,
@@ -223,14 +227,6 @@ module API
                                      end
                                    }
           
-          schema_with_allowed_link :wt_category_id,
-                                   type: 'Integer',
-                                   required: false,
-                                   href_callback: ->(*) {
-                                     if represented.project
-                                       api_v3_paths.available_responsibles(represented.project_id)
-                                     end
-                                   }
 
           schema_with_allowed_collection :type,
                                          value_representer: Types::TypeRepresenter,

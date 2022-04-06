@@ -50,7 +50,7 @@ class Tables::WorkPackages < Tables::Base
       t.date :start_date
       t.belongs_to :parent, default: nil, type: :int
       t.belongs_to :responsible, type: :int
-      t.belongs_to :mt_category_id, type: :int
+      t.integer :mtcategoryid, default: 0, type: :int
 
       # Nested Set
       t.integer :root_id, default: nil

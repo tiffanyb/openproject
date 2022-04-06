@@ -26,6 +26,8 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
+require 'pry'
+
 module Type::Attributes
   extend ActiveSupport::Concern
 
@@ -74,11 +76,13 @@ module Type::Attributes
         WorkPackageCustomField.pluck(Arel.sql('max(updated_at), count(id)')).flatten
       end
 
-      OpenProject::Cache.fetch('all_work_package_form_attributes',
-                               *wp_cf_cache_parts,
-                               merge_date) do
-        calculate_all_work_package_form_attributes(merge_date)
-      end
+      puts("111111111111111111111111111111111111111111")
+      #OpenProject::Cache.fetch('all_work_package_form_attributes',
+                               #*wp_cf_cache_parts,
+                               #merge_date, expires_in: 0.second) do
+                                 #calculate_all_work_package_form_attributes(merge_date)
+      #end
+      calculate_all_work_package_form_attributes(merge_date)
     end
 
     def translated_work_package_form_attributes(merge_date: false)
@@ -99,8 +103,10 @@ module Type::Attributes
     private
 
     def calculate_all_work_package_form_attributes(merge_date)
+      puts("2222222222222222222222222222222222")
       attributes = calculate_default_work_package_form_attributes
 
+      puts("attributes: #{attributes}")
       # within the form date is shown as a single entry including start and due
       if merge_date
         merge_date_for_form_attributes(attributes)
@@ -112,6 +118,7 @@ module Type::Attributes
     end
 
     def calculate_default_work_package_form_attributes
+      puts("33333333333333333333333333333333333")
       representable_config = API::V3::WorkPackages::Schema::WorkPackageSchemaRepresenter
                              .representable_attrs
 
@@ -120,6 +127,7 @@ module Type::Attributes
       #  * directly in other envs, e.g. test
       definitions = representable_config.key?(:definitions) ? representable_config[:definitions] : representable_config
 
+      puts("definitions keys: #{definitions.keys}")
       definitions.keys
                  .reject { |key| skipped_attribute?(key, definitions[key]) }
                  .map { |key| [key, JSON::parse(definitions[key].to_json)] }.to_h
@@ -128,7 +136,6 @@ module Type::Attributes
     def skipped_attribute?(key, definition)
       # We always want to include the priority even if its required
       return false if key == 'priority'
-
       EXCLUDED.include?(key) || definition[:required]
     end
 

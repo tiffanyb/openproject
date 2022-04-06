@@ -144,25 +144,5 @@
     </ndc-dynamic>
   </div>
 
-  <div
-      class="attributes-key-value--key"
-      *ngIf="!category.multiple && category.field">
-      <wp-replacement-label [fieldName]="category.name">
-        {{ category.label }}
-        <span class="required"
-              *ngIf="category.field!.required && category.field!.writable"> *</span>
-      </wp-replacement-label>
-      <attribute-help-text [attribute]="category.name" [attributeScope]="'WorkPackage'"></attribute-help-text>
-  </div>
-    <div id="TTTTTTTTTTTTTT" 
-         *ngIf="!category.multiple && category.field"
-         class="attributes-key-value--value-container">
-      <editable-attribute-field [ngClass]="{'wp-edit-formattable-field': category.field!.isFormattable }"
-                                [resource]="workPackage"
-                                [isDropTarget]="category.field!.isFormattable"
-                                [fieldName]="category.name">
-      </editable-attribute-field>
-    </div>
-    <!-- subject-->
 
 </div>

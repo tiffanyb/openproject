@@ -415,7 +415,8 @@ module API
                  if: ->(*) { embed_links },
                  uncacheable: true
 
-        property :mt_category_id
+        property :mtcategoryid,
+                 render_nil: true
 
         associated_resource :category
 
@@ -523,7 +524,7 @@ module API
           # will be used afterwards anyway. Otherwise, we will have to
           # go through method_missing which will take more time.
           represented.define_all_custom_field_accessors
-
+          puts(args)
           super
         end
 

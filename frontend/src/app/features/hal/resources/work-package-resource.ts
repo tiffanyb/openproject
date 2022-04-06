@@ -55,7 +55,7 @@ export interface WorkPackageResourceEmbedded {
   availableWatchers:HalResource|any;
   category:HalResource|any;
   children:WorkPackageResource[];
-  mt_category:HalResource|any;
+  mtcategoryid:HalResource|any;
   parent:WorkPackageResource|null;
   priority:HalResource|any;
   project:HalResource|any;
@@ -220,6 +220,7 @@ export class WorkPackageBaseResource extends HalResource {
 
   public $initialize(source:any) {
     super.$initialize(source);
+    console.log(source);
 
     const attachments:any = this.attachments || { $source: {}, elements: [] };
     this.attachments = new AttachmentCollectionResource(

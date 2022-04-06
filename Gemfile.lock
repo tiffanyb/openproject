@@ -1073,6 +1073,7 @@ DEPENDENCIES
   posix-spawn (~> 0.3.13)
   prawn (~> 2.2)
   prawn-markup (~> 0.3.0)
+  pry (~> 0.13.1)
   pry-byebug (~> 3.9.0)
   pry-rails (~> 0.3.6)
   pry-rescue (~> 1.5.2)

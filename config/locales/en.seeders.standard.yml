@@ -107,6 +107,10 @@ en:
             types:
               - :default_type_task
               - :default_type_phase
+            categories:
+              - Specific commands to start the challenge
+              - Running the poller scripts for the challenge
+              - Write scripts to interact with the challenge
             #boards:
               #kanban:
                 #name: 'Kanban board'
@@ -127,11 +131,13 @@ en:
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
+                mtcategoryid: 0
               - start: 0
                 subject: Running the poller scripts for the challenge
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
+                mtcategoryid: 0
               - start: 0
                 subject: Write scripts to interact with the challenge
                 description: ''

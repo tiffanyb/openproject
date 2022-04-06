@@ -228,7 +228,10 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
     // Is a query in a new screen
     const queryInNew = isNewResource(this.workPackage) && !!group.query;
 
-    return isEmpty || queryInNew;
+    const isDetails = group.name === "Details";
+    const isEstimateTime = group.name === "Estimates and time";
+
+    return isEmpty || queryInNew || isDetails || isEstimateTime;
   }
 
   /**
