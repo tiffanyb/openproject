@@ -55,6 +55,7 @@ export interface WorkPackageResourceEmbedded {
   availableWatchers:HalResource|any;
   category:HalResource|any;
   children:WorkPackageResource[];
+  mt_category:HalResource|any;
   parent:WorkPackageResource|null;
   priority:HalResource|any;
   project:HalResource|any;

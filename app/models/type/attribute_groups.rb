@@ -46,7 +46,8 @@ module Type::AttributeGroups
         responsible: :people,
         estimated_time: :estimates_and_time,
         spent_time: :estimates_and_time,
-        priority: :details
+        priority: :details,
+        mt_category_id: :mt_category,
       }
     end
 
@@ -57,7 +58,8 @@ module Type::AttributeGroups
         estimates_and_time: :label_estimates_and_time,
         details: :label_details,
         other: :label_other,
-        children: :'activerecord.attributes.work_package.children'
+        children: :'activerecord.attributes.work_package.children',
+        mt_category: :label_mt_category,
       }
     end
   end

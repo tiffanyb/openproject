@@ -141,6 +141,7 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
   }
 
   public render() {
+    //console.log(this.fieldName);
     const el = this.fieldRenderer.render(this.resource, this.fieldName, null, this.displayPlaceholder);
     this.displayContainer.nativeElement.innerHTML = '';
     this.displayContainer.nativeElement.appendChild(el);
@@ -200,7 +201,6 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
       // Get the position where the user clicked.
       positionOffset = getPosition(evt);
     }
-
     this.activateOnForm()
       .then((handler) => {
         if (!handler) {

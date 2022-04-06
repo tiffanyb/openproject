@@ -415,6 +415,8 @@ module API
                  if: ->(*) { embed_links },
                  uncacheable: true
 
+        property :mt_category_id
+
         associated_resource :category
 
         associated_resource :type
@@ -443,6 +445,7 @@ module API
                             link: ::API::V3::Principals::PrincipalRepresenterFactory
                                     .create_link_lambda(:assigned_to)
 
+        
         associated_resource :version,
                             v3_path: :version,
                             representer: ::API::V3::Versions::VersionRepresenter

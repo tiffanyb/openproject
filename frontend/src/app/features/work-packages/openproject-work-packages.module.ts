@@ -449,7 +449,9 @@ export class OpenprojectWorkPackagesModule {
 
     const hookService = injector.get(HookService);
 
+    //console.log(hookService);
     hookService.register('attributeGroupComponent', (group:GroupDescriptor, workPackage:WorkPackageResource) => {
+      //console.log(group);
       if (group.type === 'WorkPackageFormAttributeGroup') {
         return WorkPackageFormAttributeGroupComponent;
       } if (!isNewResource(workPackage) && group.type === 'WorkPackageFormChildrenQueryGroup') {

@@ -38,6 +38,7 @@ class WorkPackages::ReportsController < ApplicationController
       reports_service.report_for('priority'),
       reports_service.report_for('assigned_to'),
       reports_service.report_for('responsible'),
+      reports_service.report_for('mt_category_id'),
       reports_service.report_for('author'),
       reports_service.report_for('version'),
       reports_service.report_for('category')

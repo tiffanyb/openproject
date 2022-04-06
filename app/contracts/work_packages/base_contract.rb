@@ -79,6 +79,8 @@ module WorkPackages
                               assignable_responsibles
     end
 
+    attribute :mt_category_id
+
     attribute :schedule_manually
 
     attribute :start_date,

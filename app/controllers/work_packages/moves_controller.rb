@@ -112,6 +112,7 @@ class WorkPackages::MovesController < ApplicationController
     params
       .permit(:assigned_to_id,
               :responsible_id,
+              :mt_category_id,
               :start_date,
               :due_date,
               :status_id,

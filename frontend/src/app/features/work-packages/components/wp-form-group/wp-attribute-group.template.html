@@ -15,7 +15,9 @@
       </div>
       <div *ngIf="!descriptor.multiple && descriptor.field"
            class="attributes-key-value--value-container">
-
+        <script>
+          console.log(descriptor)
+          </script>
         <editable-attribute-field [ngClass]="{'wp-edit-formattable-field': descriptor.field!.isFormattable }"
                                   [resource]="workPackage"
                                   [isDropTarget]="descriptor.field!.isFormattable"

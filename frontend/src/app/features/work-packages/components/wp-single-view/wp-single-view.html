@@ -107,6 +107,7 @@
     </ng-container>
 
     <ng-container *ngIf="!group.isolated">
+      <p>Group name</p>
       <div class="attributes-group--header">
         <div class="attributes-group--header-container">
           <h3 class="attributes-group--header-text"
@@ -114,6 +115,7 @@
         </div>
       </div>
 
+      <p>Group Item {{ group.name }}</p>
       <ndc-dynamic [ndcDynamicComponent]="attributeGroupComponent(group)"
                    [ndcDynamicInjector]="injector"
                    [ndcDynamicInputs]="{ workPackage: workPackage, group: group }">

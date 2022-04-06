@@ -50,6 +50,8 @@ module API
                              column_name: :assigned_to_id
 
         associated_user_link :responsible
+        
+        property :mt_category_id
 
         property :_type,
                  representation: ->(*) { "'WorkPackage'" }

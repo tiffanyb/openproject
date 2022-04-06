@@ -156,6 +156,8 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
 
     this.isNewResource = isNewResource(this.workPackage);
 
+    console.log(this.isNewResource);
+    console.log(this.workPackage);
     const change = this.halEditing.changeFor<WorkPackageResource, WorkPackageChangeset>(this.workPackage);
     this.resourceContextChange.next(this.contextFrom(change.projectedResource));
     this.refresh(change);
@@ -201,8 +203,11 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
       this.projectContext.field = this.getFields(change, ['project']);
     }
 
+    console.log(resource);
     const attributeGroups = this.schema(resource)._attributeGroups;
+    console.log(this.schema(resource));
     this.groupedFields = this.rebuildGroupedFields(change, attributeGroups);
+    console.log(this.groupedFields);
     this.cdRef.detectChanges();
   }
 
@@ -277,7 +282,6 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
     if (!attributeGroups) {
       return [];
     }
-
     return attributeGroups.map((group:any) => {
       const groupId = this.getAttributesGroupId(group);
 
