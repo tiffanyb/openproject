@@ -98,6 +98,8 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
   // Grouped fields returned from API
   public groupedFields:GroupDescriptor[] = [];
 
+  public category:FieldDescriptor;
+
   // State updated when structural changes to the single view may occur.
   // (e.g., when changing the type or project context).
   public resourceContextChange = new Subject<ResourceContextChange>();
@@ -203,11 +205,15 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
       this.projectContext.field = this.getFields(change, ['project']);
     }
 
-    console.log(resource);
+    //console.log(resource);
     const attributeGroups = this.schema(resource)._attributeGroups;
-    console.log(this.schema(resource));
+    //console.log(this.schema(resource));
     this.groupedFields = this.rebuildGroupedFields(change, attributeGroups);
-    console.log(this.groupedFields);
+    //console.log(this.groupedFields);
+    const detailComponent = this.groupedFields.filter(element => element.name == "Details")[0];
+    this.category = detailComponent.members.filter(element => element.name == "category")[0];
+    console.log(this.category);
+
     this.cdRef.detectChanges();
   }
 
