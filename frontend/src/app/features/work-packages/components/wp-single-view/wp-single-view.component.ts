@@ -56,6 +56,8 @@ import { CurrentProjectService } from 'core-app/core/current-project/current-pro
 import { States } from 'core-app/core/states/states.service';
 import { SchemaCacheService } from 'core-app/core/schemas/schema-cache.service';
 import { debugLog } from 'core-app/shared/helpers/debug_output';
+import { OpInviteUserModalService } from 'core-app/features/invite-user-modal/invite-user-modal.service';
+import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-template.service';
 
 export interface FieldDescriptor {
   name:string;

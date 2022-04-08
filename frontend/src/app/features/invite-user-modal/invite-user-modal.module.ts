@@ -10,6 +10,7 @@ import { DynamicFormsModule } from 'core-app/shared/components/dynamic-forms/dyn
 import { OpInviteUserModalAugmentService } from 'core-app/features/invite-user-modal/invite-user-modal-augment.service';
 import { OPSharedModule } from 'core-app/shared/shared.module';
 import { OpInviteUserModalService } from 'core-app/features/invite-user-modal/invite-user-modal.service';
+import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-template.service';
 import { InviteUserModalComponent } from './invite-user.component';
 import { ProjectSelectionComponent } from './project-selection/project-selection.component';
 import { ProjectSearchComponent } from './project-selection/project-search.component';
@@ -60,6 +61,7 @@ export function initializeServices(injector:Injector) {
     {
       provide: APP_INITIALIZER, useFactory: initializeServices, deps: [Injector], multi: true,
     },
+    OpTaskTemplateService,
   ],
 })
 export class OpenprojectInviteUserModalModule {

@@ -217,6 +217,7 @@ export function initializeServices(injector:Injector) {
     // Form configuration
     OpDragScrollDirective,
     ConfirmFormSubmitController,
+    
   ],
 })
 export class OpenProjectModule {

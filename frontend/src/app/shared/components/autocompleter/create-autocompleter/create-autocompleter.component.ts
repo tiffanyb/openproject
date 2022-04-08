@@ -39,6 +39,7 @@ import {
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { I18nService } from 'core-app/core/i18n/i18n.service';
 import { OpInviteUserModalService } from 'core-app/features/invite-user-modal/invite-user-modal.service';
+import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-template.service';
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
 import { PathHelperService } from 'core-app/core/path-helper/path-helper.service';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
@@ -100,6 +101,8 @@ export class CreateAutocompleterComponent extends UntilDestroyedMixin implements
   @ViewChild(NgSelectComponent) public ngSelectComponent:NgSelectComponent;
 
   @InjectField() readonly opInviteUserModalService:OpInviteUserModalService;
+  
+  @InjectField() readonly opTaskTemplateService:OpTaskTemplateService;
 
   @InjectField() readonly I18n:I18nService;
 
@@ -127,6 +130,16 @@ export class CreateAutocompleterComponent extends UntilDestroyedMixin implements
     this.onAfterViewInit.emit(this);
     if (this.opInviteUserModalService) {
       this.opInviteUserModalService.close
+        .pipe(
+          this.untilDestroyed(),
+          filter((user) => !!user),
+        )
+        .subscribe((user:HalResource) => {
+          this.onChange.emit(user);
+        });
+    }
+    if (this.opTaskTemplateService) {
+      this.opTaskTemplateService.close
         .pipe(
           this.untilDestroyed(),
           filter((user) => !!user),
@@ -196,5 +209,9 @@ export class CreateAutocompleterComponent extends UntilDestroyedMixin implements
 
   public isPrincipal(item:CreateAutocompleterValueOption) {
     return item.href && typeFromHref(item.href) !== null;
+  }
+
+  public isCategory(item:CreateAutocompleterValueOption) {
+    return item.href && item.href.split("/")[3] === 'categories';
   }
 }
