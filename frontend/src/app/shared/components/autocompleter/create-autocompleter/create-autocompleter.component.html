@@ -36,7 +36,9 @@
             [textContent]="item.name"
             class="ng-option-label ellipsis">
       </span>
-      <op-cc-button *ngIf="isCategory(item)" [textContent]="item.name">
+      <op-cc-button *ngIf="isCategory(item)" 
+        [textContent]="item.name"
+        [categoryId]="item.id">
       </op-cc-button>
   </ng-template>
   <ng-template ng-footer-tmp *ngIf="showAddNewButton">

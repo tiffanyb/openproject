@@ -14,6 +14,7 @@ import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-
 })
 export class CCButtonComponent {
   @Input() textContent:string;
+  @Input() categoryId:string;
   @Input() projectId:string|null;
 
   /** This component does not provide an output, because both primary usecases were in places where the button was
@@ -41,13 +42,10 @@ export class CCButtonComponent {
     );
   }
 
-  public onAddNewClick($event:Event):void {
-    console.log(event);
-    // const categoryName = $event.target.lastChild;
+  public onAddNewClick($event:Event, categoryId:string):void {
+    console.log(categoryId);
     $event.stopPropagation();
-    this.opTaskTemplateService.open("testcategory");
-    //this.opInviteUserModalService.open(this.projectId);
-    console.log(this.ngSelectComponent);
+    this.opTaskTemplateService.open(categoryId);
     this.ngSelectComponent.close();
   }
 }

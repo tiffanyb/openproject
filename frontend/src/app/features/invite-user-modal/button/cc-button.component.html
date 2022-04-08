@@ -1,7 +1,8 @@
 <button
   class="op-select-footer--label"
   type="button"
-  (click)="onAddNewClick($event)"
+  [categoryId]="categoryId"
+  (click)="onAddNewClick($event, categoryId)"
   *ngIf="canInviteUsersToProject$ | async"
 >
   <span class="icon-context">

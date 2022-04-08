@@ -46,6 +46,8 @@ import { ApiV3QueriesPaths } from 'core-app/core/apiv3/endpoints/queries/apiv3-q
 import { ApiV3WorkPackagesPaths } from 'core-app/core/apiv3/endpoints/work_packages/api-v3-work-packages-paths';
 import { ApiV3ProjectPaths } from 'core-app/core/apiv3/endpoints/projects/apiv3-project-paths';
 import { ApiV3ProjectsPaths } from 'core-app/core/apiv3/endpoints/projects/apiv3-projects-paths';
+import { ApiV3CategoriesPaths } from 'core-app/core/apiv3/endpoints/categories/apiv3-categories-paths';
+import { ApiV3CategoryPaths } from 'core-app/core/apiv3/endpoints/categories/apiv3-category-paths';
 import { ApiV3StatusesPaths } from 'core-app/core/apiv3/endpoints/statuses/apiv3-statuses-paths';
 import { ApiV3RolesPaths } from 'core-app/core/apiv3/endpoints/roles/apiv3-roles-paths';
 import { ApiV3VersionsPaths } from 'core-app/core/apiv3/endpoints/versions/apiv3-versions-paths';
@@ -126,6 +128,9 @@ export class ApiV3Service {
 
   // /api/v3/projects
   public readonly projects = this.apiV3CustomEndpoint(ApiV3ProjectsPaths);
+  
+  // /api/v3/categories
+  public readonly categories = this.apiV3CustomEndpoint(ApiV3CategoriesPaths);
 
   // /api/v3/users
   public readonly users = this.apiV3CustomEndpoint(ApiV3UsersPaths);
@@ -147,6 +152,7 @@ export class ApiV3Service {
 
   // /api/v3/views
   public readonly views = this.apiV3CustomEndpoint(ApiV3ViewsPaths);
+
 
   // VIRTUAL boards are /api/v3/grids + a scope filter
   public readonly boards = this.apiV3CustomEndpoint(ApiV3BoardsPaths);
