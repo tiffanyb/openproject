@@ -30,7 +30,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
 import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
 import { OpModalService } from 'core-app/shared/components/modal/modal.service';
-import { InviteUserModalComponent } from './invite-user.component';
+import { TaskTemplateComponent } from './task-template.component';
 
 /**
  * This service triggers user-invite modals to clicks on elements
@@ -48,14 +48,14 @@ export class OpTaskTemplateService {
 
   public open(projectId:string|null = this.currentProjectService.id) {
     const modal = this.opModalService.show(
-      InviteUserModalComponent,
+      TaskTemplateComponent,
       'global',
       { projectId },
     );
 
     modal
       .closingEvent
-      .subscribe((modal:InviteUserModalComponent) => {
+      .subscribe((modal:TaskTemplateComponent) => {
         this.close.emit(modal.data);
       });
   }

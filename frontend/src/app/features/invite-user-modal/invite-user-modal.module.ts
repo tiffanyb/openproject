@@ -12,6 +12,7 @@ import { OPSharedModule } from 'core-app/shared/shared.module';
 import { OpInviteUserModalService } from 'core-app/features/invite-user-modal/invite-user-modal.service';
 import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-template.service';
 import { InviteUserModalComponent } from './invite-user.component';
+import { TaskTemplateComponent } from './task-template.component';
 import { ProjectSelectionComponent } from './project-selection/project-selection.component';
 import { ProjectSearchComponent } from './project-selection/project-search.component';
 import { PrincipalComponent } from './principal/principal.component';
@@ -46,6 +47,7 @@ export function initializeServices(injector:Injector) {
   ],
   declarations: [
     InviteUserModalComponent,
+    TaskTemplateComponent,
     ProjectSelectionComponent,
     ProjectSearchComponent,
     PrincipalComponent,
