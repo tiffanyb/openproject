@@ -26,37 +26,26 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { Injectable, EventEmitter } from '@angular/core';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
-import { CurrentProjectService } from 'core-app/core/current-project/current-project.service';
-import { OpModalService } from 'core-app/shared/components/modal/modal.service';
-import { TaskTemplateComponent } from './task-template.component';
+import { ICKEditorContext } from 'core-app/shared/components/editor/components/ckeditor/ckeditor.types';
 
-/**
- * This service triggers user-invite modals to clicks on elements
- * with the attribute [invite-user-modal-augment] set.
- */
-@Injectable()
-export class OpTaskTemplateService {
-  public close = new EventEmitter<HalResource|HalResource[]>();
-
-  constructor(
-    protected opModalService:OpModalService,
-    protected currentProjectService:CurrentProjectService,
-  ) {
+export class CategoryResource extends HalResource {
+  public get state() {
+    return this.states.projects.get(this.id!) as any;
   }
 
-  public open(categoryId:string|null = this.currentProjectService.id) {
-    const modal = this.opModalService.show(
-      TaskTemplateComponent,
-      'global',
-      { categoryId },
-    );
+  public getEditorContext(fieldName:string):ICKEditorContext {
+    if (['statusExplanation', 'description'].indexOf(fieldName) !== -1) {
+      return { type: 'full', macros: 'resource' };
+    }
 
-    modal
-      .closingEvent
-      .subscribe((component:TaskTemplateComponent) => {
-        this.close.emit(component.data);
-      });
+    return { type: 'constrained' };
+  }
+
+  /**
+   * Exclude the schema _link from the linkable Resources.
+   */
+  public $linkableKeys():string[] {
+    return _.without(super.$linkableKeys(), 'schema');
   }
 }

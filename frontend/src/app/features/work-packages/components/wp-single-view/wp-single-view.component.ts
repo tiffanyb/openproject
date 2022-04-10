@@ -160,7 +160,7 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
 
     this.isNewResource = isNewResource(this.workPackage);
 
-    console.log(this.isNewResource);
+    //console.log(this.isNewResource);
     console.log(this.workPackage);
     const change = this.halEditing.changeFor<WorkPackageResource, WorkPackageChangeset>(this.workPackage);
     this.resourceContextChange.next(this.contextFrom(change.projectedResource));
@@ -207,14 +207,12 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
       this.projectContext.field = this.getFields(change, ['project']);
     }
 
-    //console.log(resource);
     const attributeGroups = this.schema(resource)._attributeGroups;
-    //console.log(this.schema(resource));
+    console.log(resource);
+    console.log(this.schema(resource));
+    console.log(attributeGroups);
     this.groupedFields = this.rebuildGroupedFields(change, attributeGroups);
-    //console.log(this.groupedFields);
-    const detailComponent = this.groupedFields.filter(element => element.name == "Details")[0];
-    this.category = detailComponent.members.filter(element => element.name == "category")[0];
-    console.log(this.category);
+    console.log(this.groupedFields);
 
     this.cdRef.detectChanges();
   }
@@ -256,6 +254,8 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
   public attributeGroupComponent(group:GroupDescriptor) {
     // we take the last registered group component which means that
     // plugins will have their say if they register for it.
+    //console.log(group);
+    //console.log(this.hook.call('attributeGroupComponent', group, this.workPackage));
     return this.hook.call('attributeGroupComponent', group, this.workPackage).pop() || null;
   }
 
@@ -400,6 +400,9 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
   }
 
   private displayField(change:WorkPackageChangeset, name:string):DisplayField {
+    //console.log(name);
+    //console.log(change.projectedResource);
+    //console.log(change.schema.ofProperty(name));
     return this.displayFieldService.getField(
       change.projectedResource,
       name,

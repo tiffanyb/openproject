@@ -173,6 +173,7 @@ import { WorkPackageMarkNotificationButtonComponent } from 'core-app/features/wo
 import { WorkPackageFilesTabComponent } from 'core-app/features/work-packages/components/wp-single-view-tabs/files-tab/op-files-tab.component';
 import { WorkPackagesQueryViewService } from 'core-app/features/work-packages/components/wp-list/wp-query-view.service';
 import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
+import { CategoryComponent } from 'core-app/features/invite-user-modal/category/category.component'
 
 @NgModule({
   imports: [
@@ -428,6 +429,7 @@ import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
     WorkPackageSingleViewComponent,
     WorkPackageSplitViewComponent,
     BackButtonComponent,
+    
   ],
 })
 export class OpenprojectWorkPackagesModule {

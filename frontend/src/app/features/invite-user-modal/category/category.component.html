@@ -1,0 +1,38 @@
+
+<form
+  [formGroup]="projectAndTypeForm"
+  (ngSubmit)="onSubmit($event)"
+>
+  
+<op-modal-header (close)="close.emit()">Task Field Information</op-modal-header>
+
+<div class="op-modal--body op-form">
+
+    <op-option-list>
+      </op-option-list>
+  <div class="-columns-2">
+  <div class="attributes-key-value"
+       [ngClass]="{'-span-all-columns': descriptor.spanAll }"
+       *ngFor="let descriptor of testTemplate">
+
+      <div class="attributes-key-value--key">
+        <wp-replacement-label [fieldName]="descriptor">
+          {{ descriptor }}
+        </wp-replacement-label>
+      </div>
+      <div class="attributes-key-value--value-container">
+        <div class="ng-input">
+        <input id="descriptor" [(ngNodel)]="value">
+        </div>
+      </div>
+  </div>
+
+  </div>
+
+</div>
+  
+<div class="op-modal--footer">
+  <button class="button -highlight">Save</button>
+  </div>
+
+</form>

@@ -14,7 +14,7 @@ import { ApiV3Service } from 'core-app/core/apiv3/api-v3.service';
 import { PrincipalData } from 'core-app/shared/components/principal/principal-types';
 import { RoleResource } from 'core-app/features/hal/resources/role-resource';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
-import { ProjectResource } from 'core-app/features/hal/resources/project-resource';
+import { CategoryResource } from 'core-app/features/hal/resources/category-resource';
 
 enum Steps {
   ProjectSelection,
@@ -50,7 +50,7 @@ export class TaskTemplateComponent extends OpModalComponent implements OnInit {
 
   public type:PrincipalType|null = null;
 
-  public project:ProjectResource|null = null;
+  public category:CategoryResource|null = null;
 
   public principalData:PrincipalData = {
     principal: null,
@@ -64,7 +64,7 @@ export class TaskTemplateComponent extends OpModalComponent implements OnInit {
   public createdNewPrincipal = false;
 
   public get loading() {
-    return this.locals.projectId && !this.project;
+    return this.locals.categoryId && !this.category;
   }
 
   constructor(
@@ -78,16 +78,17 @@ export class TaskTemplateComponent extends OpModalComponent implements OnInit {
 
   ngOnInit() {
     super.ngOnInit();
-
-    if (this.locals.projectId) {
-      this.apiV3Service.categories.id(this.locals.projectId).get().subscribe(
+    if (this.locals.categoryId) {
+      this.apiV3Service.categories.id(this.locals.categoryId).get().subscribe(
         (data) => {
           console.log(data);
-          this.project = data;
+          this.data = data.name;
+          this.category = data;
           this.cdRef.markForCheck();
         },
         () => {
-          this.locals.projectId = null;
+          // this shouldn't happen
+          this.locals.categoryId = null;
           this.cdRef.markForCheck();
         },
       );
@@ -96,7 +97,7 @@ export class TaskTemplateComponent extends OpModalComponent implements OnInit {
 
   onProjectSelectionSave({ type, project }:{ type:PrincipalType, project:any }) {
     this.type = type;
-    this.project = project;
+    this.category = project;
     this.goTo(Steps.Principal);
   }
 

@@ -14,6 +14,7 @@ import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-
 import { InviteUserModalComponent } from './invite-user.component';
 import { TaskTemplateComponent } from './task-template.component';
 import { ProjectSelectionComponent } from './project-selection/project-selection.component';
+import { CategoryComponent } from './category/category.component';
 import { ProjectSearchComponent } from './project-selection/project-search.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { PrincipalSearchComponent } from './principal/principal-search.component';
@@ -48,6 +49,7 @@ export function initializeServices(injector:Injector) {
   declarations: [
     InviteUserModalComponent,
     TaskTemplateComponent,
+    CategoryComponent,
     ProjectSelectionComponent,
     ProjectSearchComponent,
     PrincipalComponent,

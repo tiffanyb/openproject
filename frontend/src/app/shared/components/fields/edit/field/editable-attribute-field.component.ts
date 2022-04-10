@@ -89,6 +89,8 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
 
   public destroyed = false;
 
+  public value = "";
+
   constructor(protected states:States,
     protected injector:Injector,
     protected elementRef:ElementRef,
@@ -124,6 +126,8 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
         this.untilDestroyed(),
       )
       .subscribe((resource) => {
+        console.log("===============================");
+        console.log(resource);
         this.resource = resource;
         this.render();
       });
@@ -141,7 +145,6 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
   }
 
   public render() {
-    //console.log(this.fieldName);
     const el = this.fieldRenderer.render(this.resource, this.fieldName, null, this.displayPlaceholder);
     this.displayContainer.nativeElement.innerHTML = '';
     this.displayContainer.nativeElement.appendChild(el);
