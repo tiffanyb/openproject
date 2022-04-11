@@ -64,6 +64,8 @@ class WorkPackage < ApplicationRecord
 
   has_and_belongs_to_many :github_pull_requests
 
+  serialize :category_description, Hash
+  
   scope :recently_updated, -> {
     order(updated_at: :desc)
   }

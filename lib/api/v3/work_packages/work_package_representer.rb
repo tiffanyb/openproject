@@ -327,6 +327,8 @@ module API
 
         formattable_property :description
 
+        property :category_description
+
         property :schedule_manually,
                  exec_context: :decorator,
                  getter: ->(*) { represented.schedule_manually? }

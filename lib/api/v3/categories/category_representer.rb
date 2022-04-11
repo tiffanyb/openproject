@@ -33,9 +33,6 @@ module API
   module V3
     module Categories
       class CategoryRepresenter < ::API::Decorators::Single
-        include ::API::Caching::CachedRepresenter
-
-        cached_representer key_parts: %i(assigned_to project)
 
         link :self do
           {
@@ -62,6 +59,7 @@ module API
 
         property :id, render_nil: true
         property :name, render_nil: true
+        property :keywords
 
         def _type
           'Category'
