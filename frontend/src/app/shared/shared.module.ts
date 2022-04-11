@@ -92,6 +92,8 @@ import { OpProjectListComponent } from './components/project-include/project-lis
 import { ViewsResourceService } from 'core-app/core/state/views/views.service';
 import { OpenprojectContentLoaderModule } from 'core-app/shared/components/op-content-loader/openproject-content-loader.module';
 
+import { HttpClientModule } from '@angular/common/http';
+
 export function bootstrapModule(injector:Injector) {
   // Ensure error reporter is run
   const currentProject = injector.get(CurrentProjectService);
@@ -139,6 +141,8 @@ export function bootstrapModule(injector:Injector) {
     FocusModule,
     IconModule,
     AttributeHelpTextModule,
+
+    HttpClientModule,
   ],
   exports: [
     // Re-export all commonly used

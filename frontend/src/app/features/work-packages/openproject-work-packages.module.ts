@@ -172,6 +172,12 @@ import { FilterBooleanValueComponent } from 'core-app/features/work-packages/com
 import { WorkPackageMarkNotificationButtonComponent } from 'core-app/features/work-packages/components/wp-buttons/wp-mark-notification-button/work-package-mark-notification-button.component';
 import { WorkPackageFilesTabComponent } from 'core-app/features/work-packages/components/wp-single-view-tabs/files-tab/op-files-tab.component';
 import { WorkPackagesQueryViewService } from 'core-app/features/work-packages/components/wp-list/wp-query-view.service';
+
+import { WpWikiUpdModalService } from 'core-app/features/work-packages/components/wp-wikiupd/wp-wikiupd-modal.service';
+import { WpWikiUpdModalComponent } from 'core-app/features/work-packages/components/wp-wikiupd/wp-wikiupd.component';
+import { CommitComponent } from 'core-app/features/work-packages/components/wp-wikiupd/commit/commit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
 import { CategoryComponent } from 'core-app/features/invite-user-modal/category/category.component'
 
@@ -195,6 +201,8 @@ import { CategoryComponent } from 'core-app/features/invite-user-modal/category/
     OpenprojectAutocompleterModule,
 
     OpWpTabsModule,
+
+    ReactiveFormsModule,
 
     EditFieldControlsModule,
     OpenprojectTabsModule,
@@ -227,8 +235,13 @@ import { CategoryComponent } from 'core-app/features/invite-user-modal/category/
     WorkPackagesQueryViewService,
 
     HalEventsService,
+
+    WpWikiUpdModalService,
   ],
   declarations: [
+    CommitComponent,
+    WpWikiUpdModalComponent,
+
     // Routing
     WorkPackagesBaseComponent,
     PartitionedQuerySpacePageComponent,
@@ -396,6 +409,7 @@ import { CategoryComponent } from 'core-app/features/invite-user-modal/category/
 
     // Notifications
     WorkPackageMarkNotificationButtonComponent,
+
   ],
   exports: [
     WorkPackagesTableComponent,

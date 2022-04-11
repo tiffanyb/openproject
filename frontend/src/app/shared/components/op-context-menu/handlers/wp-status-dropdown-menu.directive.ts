@@ -42,6 +42,11 @@ import { HalEventsService } from 'core-app/features/hal/services/hal-events.serv
 import { WorkPackageNotificationService } from 'core-app/features/work-packages/services/notifications/work-package-notification.service';
 import isNewResource from 'core-app/features/hal/helpers/is-new-resource';
 
+import { WpWikiUpdModalService } from 'core-app/features/work-packages/components/wp-wikiupd/wp-wikiupd-modal.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { Observable } from "rxjs";
+
 @Directive({
   selector: '[wpStatusDropdown]',
 })
@@ -51,6 +56,8 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
   constructor(readonly elementRef:ElementRef,
     readonly opContextMenu:OPContextMenuService,
     readonly $state:StateService,
+    readonly wpWikiUpdModalService:WpWikiUpdModalService,
+    private http:HttpClient,
     protected workPackageNotificationService:WorkPackageNotificationService,
     protected halEditing:HalResourceEditingService,
     protected toastService:ToastService,
@@ -85,6 +92,36 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
   private updateStatus(status:HalResource) {
     const change = this.halEditing.changeFor(this.workPackage);
     change.projectedResource.status = status;
+    const proj_id = this.workPackage.project.name;
+
+    if(status.name == "Closed") {
+      this.wpWikiUpdModalService.close.subscribe((d) => {
+        if(d == null) {
+          return;
+        }
+
+        const options = {
+          headers: new HttpHeaders({
+            'Content-Type':  'application/json',
+          }),
+          withCredentials: true,
+        };
+        this.http.post("/projects/" + proj_id + "/wpappend", { "msg": d }).pipe(catchError((err, caught) => {
+          return Observable.throw(err.message);
+        })).subscribe((d) => { });
+        console.log("HTTP Request");
+
+        if (!isNewResource(this.workPackage)) {
+          this.halEditing
+            .save(change)
+            .then(() => {
+              this.workPackageNotificationService.showSave(this.workPackage);
+            });
+        }
+      });
+      this.wpWikiUpdModalService.open(null);
+      return;
+    }
 
     if (!isNewResource(this.workPackage)) {
       this.halEditing
