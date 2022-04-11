@@ -146,6 +146,7 @@ export class EditFormComponent extends EditForm<HalResource> implements OnInit, 
   public onSaved(commit:ResourceChangesetCommit) {
     this.cancel(false);
     this.onSavedEmitter.emit({ savedResource: commit.resource, isInitial: commit.wasNew });
+    console.log(this.fields);
   }
 
   public cancel(reset = false) {

@@ -67,7 +67,7 @@ export class WorkPackageEditActionsBarComponent {
     if (this.saving) {
       return;
     }
-
+    console.log(this.editForm);
     this.saving = true;
     this.editForm
       .submit()

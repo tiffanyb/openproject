@@ -188,6 +188,7 @@ export class WorkPackageCreateComponent extends UntilDestroyedMixin implements O
     const defaults:HalSource = (this.stateParams.defaults as HalSource) || {};
     defaults._links = defaults._links || {};
 
+    console.log(this.stateParams);
     const type = this.stateParams.type ? parseInt(this.stateParams.type) : undefined;
     const parent = this.stateParams.parent_id ? parseInt(this.stateParams.parent_id) : undefined;
     const project = this.stateParams.projectPath;
