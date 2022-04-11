@@ -56,6 +56,7 @@ export interface WorkPackageResourceEmbedded {
   category:HalResource|any;
   children:WorkPackageResource[];
   mtcategoryid:HalResource|any;
+  categoryDescription:HalResource|any;
   parent:WorkPackageResource|null;
   priority:HalResource|any;
   project:HalResource|any;
@@ -124,6 +125,8 @@ export class WorkPackageBaseResource extends HalResource {
   public lockVersion:number;
 
   public description:any;
+
+  public categoryDescription: any;
 
   public activities:CollectionResource;
 

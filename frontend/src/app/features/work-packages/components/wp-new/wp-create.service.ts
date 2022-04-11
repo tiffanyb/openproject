@@ -100,6 +100,7 @@ export class WorkPackageCreateService extends UntilDestroyedMixin {
   }
 
   public createNewWorkPackage(projectIdentifier:string|undefined|null, payload:HalSource):Promise<WorkPackageChangeset> {
+    console.log(payload);
     return this
       .apiV3Service
       .withOptionalProject(projectIdentifier)
@@ -107,7 +108,9 @@ export class WorkPackageCreateService extends UntilDestroyedMixin {
       .form
       .forPayload(payload)
       .toPromise()
-      .then((form:FormResource) => this.fromCreateForm(form));
+      .then((form:FormResource) => 
+        this.fromCreateForm(form)
+      );
   }
 
   public fromCreateForm(form:FormResource):WorkPackageChangeset {
@@ -182,6 +185,7 @@ export class WorkPackageCreateService extends UntilDestroyedMixin {
     if (!changePromise) {
       changePromise = this.createNewWithDefaults(projectIdentifier, defaults);
     }
+    console.log(defaults);
 
     return changePromise.then((change:WorkPackageChangeset) => {
       this.authorisationService.initModelAuth('work_package', change.pristineResource);
@@ -244,6 +248,7 @@ export class WorkPackageCreateService extends UntilDestroyedMixin {
           if (!change) {
             throw new Error('No new work package was created');
           }
+          console.log(change);
 
           // We need to apply the defaults again (after them being applied in the form requests)
           // here as the initial form requests might have led to some default

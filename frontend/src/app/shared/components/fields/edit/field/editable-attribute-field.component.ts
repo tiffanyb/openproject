@@ -126,8 +126,6 @@ export class EditableAttributeFieldComponent extends UntilDestroyedMixin impleme
         this.untilDestroyed(),
       )
       .subscribe((resource) => {
-        console.log("===============================");
-        console.log(resource);
         this.resource = resource;
         this.render();
       });
