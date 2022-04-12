@@ -49,9 +49,9 @@ class AdminUserSeeder < Seeder
       user.admin = true
       user.login = 'admin'
       user.password = 'admin'
-      user.firstname = 'OpenProject'
-      user.lastname = 'Admin'
-      user.mail = ENV['ADMIN_EMAIL'].presence || 'admin@example.net'
+      user.firstname = 'Mechanical'
+      user.lastname = 'Tiger'
+      user.mail = ENV['ADMIN_EMAIL'].presence || 'mechanicaltiger@asu.edu'
       user.language = I18n.locale.to_s
       user.status = User.statuses[:active]
       user.force_password_change = force_password_change?

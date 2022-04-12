@@ -27,14 +27,6 @@
 module DevelopmentData
   class CustomFieldsSeeder < Seeder
     def seed_data!
-      CustomField.transaction do
-        print_status '    ↳ Creating custom fields...'
-        cfs = create_cfs!
-
-        print_status "\n    ↳ Creating types for linking CFs"
-        create_types!(cfs)
-      end
-
       puts
     end
 

@@ -142,7 +142,7 @@ per_page_options:
 forced_single_page_size:
   default: 250
 mail_from:
-  default: openproject@example.net
+  default: mechanicaltiger@example.net
 bcc_recipients:
   default: 1
 plain_text_mail:

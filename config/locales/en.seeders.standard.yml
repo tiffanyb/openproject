@@ -41,7 +41,7 @@ en:
           blank:
             name: Blank project
             identifier: empty
-            description: heyhey
+            description: This is a blank project
             modules:
               - work_package_tracking
               - wiki
@@ -54,7 +54,6 @@ en:
                 columns:
                   - id
                   - subject
-                  - priority
                   - status
                   - assigned_to
             types:
@@ -71,67 +70,107 @@ en:
           chess_challenge:
             name: Chess challenge
             identifier: chess-challenge
-            description: heyhey
+            description: Welcome to Chess challenge!
             modules:
               - work_package_tracking
               - wiki
-            queries:
-              - name: Project plan
-                status: open
-                timeline: true
-                sort_by: id
-                hierarchy: true
-                starred: true
-                columns:
-                  - id
-                  - type
-                  - subject
-                  - status
-                  - start_date
-                  - due_date
-                  - assigned_to
-              - name: Tasks
-                status: open
-                type: :default_type_task
-                hierarchy: true
-                sort_by: id
-                columns:
-                  - id
-                  - subject
-                  - priority
-                  - status
-                  - assigned_to
-              - name: Team planner
-                module: team_planner
-                assignee: OpenProject Admin
             types:
               - :default_type_task
             categories:
               - name: Specific commands to start the challenge
                 keywords:
-                  - A
-                  - B
+                  - Challenge name
               - name: Running the poller scripts for the challenge
                 keywords:
-                  - C
-                  - D
+                  - Poller ID
               - name: Write scripts to interact with the challenge
                 keywords:
-                  - E
-                  - F
+                  - Challenge name
+              - name: Describe function features
+                keywords:
+                  - Function address
+              - name: Protocol to communicate with the challenge
+                keywords:
+                  - Function address
+              - name: Interesting strings inside the binaries
+                keywords:
+                  - Location
+              - name: Identify library functions
+                keywords:
+                  - Function address
+              - name: Identify core feature functions
+                keywords:
+                  - Function address
+              - name: Identify critical data / data structure
+                keywords:
+                  - Data address
+              - name: Ease fuzzing
+                keywords:
+                  - Fuzzer
+              - name: Transform fuzzing binary
+                keywords:
+                - Current binary MD5
+              - name: Generate a fuzzing seed
+                keywords:
+                - Covered function(s)
+              - name: Check if fuzzing is saturated
+                keywords:
+                - Fuzzer
+              - name: Avoid symbolic execution explosion
+                keywords:
+                - Initial state identifier
+              - name: Reproduce a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Minimize a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Understand the crash message
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Triage and find out the root cause of a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Convert a crash to a POV
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Identify POI in the program
+                keywords:
+                - Address range
+                - Function
+              - name: Run the generated input that touches the POI
+                keywords:
+                - POI ID
+                - Input/Seed ID
+              - name: Minimize POI input
+                keywords:
+                - POI ID
+              - name: Associate a crash triggered by the POI, if there's any
+                keywords:
+                - POI ID
+                - Crash ID
+              - name: Generate a symbolic trace to reach the POI's target function
+                keywords:
+                - POI ID
+                - Function address
+                - Constraints
             work_packages:
               - start: 0
                 subject: Specific commands to start the challenge
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
-                mtcategoryid: 0
+                category: 1
               - start: 0
                 subject: Running the poller scripts for the challenge
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
-                mtcategoryid: 0
               - start: 0
                 subject: Write scripts to interact with the challenge
                 description: ''
@@ -148,7 +187,7 @@ en:
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Interesting strings inside the binaries.
+                subject: Interesting strings inside the binaries
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
@@ -223,7 +262,7 @@ en:
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Run the generated POI
+                subject: Run the generated input that touches the POI
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
@@ -233,33 +272,13 @@ en:
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Assotiate a crash triggered by the POI, if there's any
+                subject: Associate a crash triggered by the POI, if there's any
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
                 subject: Generate a symbolic trace to reach the POI's target function
                 description: ''
-                status: default_status_in_progress
-                type: default_type_task
-              - start: 0
-                subject: Monitor automation tools' running status
-                description: ''
-                status: default_status_in_progress
-                type: default_type_task
-              - start: 0
-                subject: Monitor humans' contribution
-                description: ''
-                status: default_status_in_progress
-                type: default_type_task
-              - start: 0
-                subject: Assign tasks to humans
-                description: ''
-                status: default_status_in_progress
-                type: default_type_task
-              - start: 0
-                subject: Organize open source conference
-                description:
                 status: default_status_in_progress
                 type: default_type_task
             wiki: |

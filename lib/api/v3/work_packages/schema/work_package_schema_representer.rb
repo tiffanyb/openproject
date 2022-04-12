@@ -112,6 +112,10 @@ module API
                  type: 'Integer',
                  required: false
 
+          schema :categoryDescription,
+                 type: 'Dictionary',
+                 required: false
+
           schema :subject,
                  type: 'String',
                  min_length: 1,
