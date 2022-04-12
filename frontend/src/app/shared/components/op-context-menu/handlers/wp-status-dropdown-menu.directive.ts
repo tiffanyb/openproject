@@ -46,6 +46,7 @@ import { WpWikiUpdModalService } from 'core-app/features/work-packages/component
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from "rxjs";
+import { CurrentUserService } from 'core-app/core/current-user/current-user.service';
 
 @Directive({
   selector: '[wpStatusDropdown]',
@@ -57,6 +58,7 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
     readonly opContextMenu:OPContextMenuService,
     readonly $state:StateService,
     readonly wpWikiUpdModalService:WpWikiUpdModalService,
+    readonly currentUserService:CurrentUserService,
     private http:HttpClient,
     protected workPackageNotificationService:WorkPackageNotificationService,
     protected halEditing:HalResourceEditingService,
@@ -100,13 +102,24 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
           return;
         }
 
+        const task_name = this.workPackage.name;
+        const user_name = this.currentUserService.name;
+        const msg = `## Task (${this.workPackage.id}): ${this.workPackage.name}
+* Completed by: ${this.currentUserService.name}
+
+${this.workPackage.description.raw}
+
+Comment:
+${d}
+`;
+
         const options = {
           headers: new HttpHeaders({
             'Content-Type':  'application/json',
           }),
           withCredentials: true,
         };
-        this.http.post("/projects/" + proj_id + "/wpappend", { "msg": d }).pipe(catchError((err, caught) => {
+        this.http.post("/projects/" + proj_id + "/wpappend", { "msg": msg }).pipe(catchError((err, caught) => {
           return Observable.throw(err.message);
         })).subscribe((d) => { });
 
