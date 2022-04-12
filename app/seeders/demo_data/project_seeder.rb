@@ -161,8 +161,8 @@ module DemoData
     end
 
     def seed_categories(project, key)
-      Array(project_data_for(key, 'categories')).each do |cat_name|
-        project.categories.create name: cat_name
+      Array(project_data_for(key, 'categories')).each do |cat|
+        project.categories.create name: cat[:name], keywords: cat[:keywords]
       end
     end
 

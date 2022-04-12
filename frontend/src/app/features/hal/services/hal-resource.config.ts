@@ -63,6 +63,7 @@ import { WorkPackageCollectionResource } from 'core-app/features/hal/resources/w
 import { RelationResource } from 'core-app/features/hal/resources/relation-resource';
 import { QueryFilterResource } from 'core-app/features/hal/resources/query-filter-resource';
 import { SchemaResource } from 'core-app/features/hal/resources/schema-resource';
+import { CategoryResource } from 'core-app/features/hal/resources/category-resource';
 
 const halResourceDefaultConfig:{ [typeName:string]:HalResourceFactoryConfigInterface } = {
   WorkPackage: {
@@ -107,6 +108,9 @@ const halResourceDefaultConfig:{ [typeName:string]:HalResourceFactoryConfigInter
   },
   Type: {
     cls: TypeResource,
+  },
+  Category: {
+    cls: CategoryResource,
   },
   Status: {
     cls: StatusResource,

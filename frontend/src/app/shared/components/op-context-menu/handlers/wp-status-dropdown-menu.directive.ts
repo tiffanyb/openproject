@@ -92,7 +92,7 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
   private updateStatus(status:HalResource) {
     const change = this.halEditing.changeFor(this.workPackage);
     change.projectedResource.status = status;
-    const proj_id = this.workPackage.project.name;
+    const proj_id = this.workPackage.project.id;
 
     if(status.name == "Closed") {
       this.wpWikiUpdModalService.close.subscribe((d) => {
@@ -109,7 +109,6 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
         this.http.post("/projects/" + proj_id + "/wpappend", { "msg": d }).pipe(catchError((err, caught) => {
           return Observable.throw(err.message);
         })).subscribe((d) => { });
-        console.log("HTTP Request");
 
         if (!isNewResource(this.workPackage)) {
           this.halEditing

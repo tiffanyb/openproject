@@ -77,44 +77,88 @@ en:
             types:
               - :default_type_task
             categories:
-              - Specific commands to start the challenge
-              - Running the poller scripts for the challenge
-              - Write scripts to interact with the challenge
-              - Features the challenge provides
-              - Protocol to communicate with the challenge
-              - Interesting strings inside the binaries
-              - Identify library functions
-              - Identify core feature functions
-              - Identify critical data / data structure
-              - Ease fuzzing
-              - Transform fuzzing binary
-              - Generate a fuzzing seed
-              - Check if fuzzing is saturated
-              - Avoid symbolic execution explosion
-              - Reproduce a crash
-              - Minimize a crash
-              - Understand the crash message
-              - Triage and find out the root cause of a crash
-              - Convert a crash to a POV
-              - Identify POI in the program
-              - Run the generated input that touches the POI
-              - Minimize POI input
-              - Associate a crash triggered by the POI, if there's any
-              - Generate a symbolic trace to reach the POI's target function
-            #boards:
-              #kanban:
-                #name: 'Kanban board'
-                #filters:
-                  #- type: default_type_task
-              #basic:
-                #name: 'Basic board'
-              #parent_child:
-                #name: 'Work breakdown structure'
-            # For all dates, the reference is the monday of the current week
-            # So
-            # * start: 0 references Monday
-            # * start: 4 references Friday
-            # * start: -1 references the last Sunday
+              - name: Specific commands to start the challenge
+                keywords:
+                  - Challenge name
+              - name: Running the poller scripts for the challenge
+                keywords:
+                  - Poller ID
+              - name: Write scripts to interact with the challenge
+                keywords:
+                  - Challenge name
+              - name: Describe function features
+                keywords:
+                  - Function address
+              - name: Protocol to communicate with the challenge
+                keywords:
+                  - Function address
+              - name: Interesting strings inside the binaries
+                keywords:
+                  - Location
+              - name: Identify library functions
+                keywords:
+                  - Function address
+              - name: Identify core feature functions
+                keywords:
+                  - Function address
+              - name: Identify critical data / data structure
+                keywords:
+                  - Data address
+              - name: Ease fuzzing
+                keywords:
+                  - Fuzzer
+              - name: Transform fuzzing binary
+                keywords:
+                - Current binary MD5
+              - name: Generate a fuzzing seed
+                keywords:
+                - Covered function(s)
+              - name: Check if fuzzing is saturated
+                keywords:
+                - Fuzzer
+              - name: Avoid symbolic execution explosion
+                keywords:
+                - Initial state identifier
+              - name: Reproduce a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Minimize a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Understand the crash message
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Triage and find out the root cause of a crash
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Convert a crash to a POV
+                keywords:
+                - Crash ID
+                - Current binary MD5
+              - name: Identify POI in the program
+                keywords:
+                - Address range
+                - Function
+              - name: Run the generated input that touches the POI
+                keywords:
+                - POI ID
+                - Input/Seed ID
+              - name: Minimize POI input
+                keywords:
+                - POI ID
+              - name: Associate a crash triggered by the POI, if there's any
+                keywords:
+                - POI ID
+                - Crash ID
+              - name: Generate a symbolic trace to reach the POI's target function
+                keywords:
+                - POI ID
+                - Function address
+                - Constraints
             work_packages:
               - start: 0
                 subject: Specific commands to start the challenge
