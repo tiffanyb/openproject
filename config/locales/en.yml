@@ -340,7 +340,7 @@ en:
     edit:
       settings: "Settings"
       form_configuration: "Form configuration"
-      projects: "Projects"
+      projects: "Challenges"
       enabled_projects: "Enabled projects"
       edit_query: "Edit table"
       query_group_placeholder: "Give the table a name"
@@ -867,14 +867,14 @@ en:
       custom_field: "Custom field"
       group: "Group"
       category: "Category"
-      status: "Work package status"
+      status: "Task status"
       member: "Member"
       news: "News"
       notification:
         one: "Notification"
         other: "Notifications"
       placeholder_user: "Placeholder user"
-      project: "Project"
+      project: "Challenge"
       query: "Custom query"
       role:
         one: "Role"
@@ -885,7 +885,7 @@ en:
       wiki: "Wiki"
       wiki_page: "Wiki page"
       workflow: "Workflow"
-      work_package: "Work package"
+      work_package: "Task"
       'doorkeeper/application': "OAuth application"
 
   errors:
@@ -938,7 +938,7 @@ en:
     name: "Name"
     password: "Password"
     priority: "Priority"
-    project: "Project"
+    project: "Challenge"
     public: "Public"
     responsible: "Accountable"
     role: "Role"
@@ -1191,7 +1191,7 @@ en:
   default_priority_immediate: "Immediate"
   default_role_anonymous: "Anonymous"
   default_role_developer: "Developer"
-  default_role_project_admin: "Project admin"
+  default_role_project_admin: "Challenge admin"
   default_role_project_creator_and_staff_manager: "Staff and projects manager"
   default_role_non_member: "Non member"
   default_role_reader: "Reader"
@@ -1214,7 +1214,7 @@ en:
     using the arrow up and arrow down key and select it with tab or
     enter. Alternatively you can enter the work package number directly.
   description_available_columns: "Available Columns"
-  description_choose_project: "Projects"
+  description_choose_project: "Challenges"
   description_compare_from: "Compare from"
   description_compare_to: "Compare to"
   description_current_position: "You are here: "
@@ -1310,7 +1310,7 @@ en:
   error_attribute_not_highlightable: "Attribute(s) not highlightable: %{attributes}"
 
   events:
-    project: 'Project edited'
+    project: 'Challenge edited'
     changeset: 'Changeset edited'
     message: Message edited
     news: News
@@ -1362,13 +1362,13 @@ en:
 
   homescreen:
     additional:
-      projects: "Newest visible projects in this instance."
+      projects: "Latest created challenges"
       no_visible_projects: "There are no visible projects in this instance."
-      users: "Newest registered users in this instance."
+      users: "Newest registered user"
     blocks:
-      community: "OpenProject community"
+      community: "CHESS community"
       upsale:
-        title: "Upgrade to Enterprise Edition"
+        title: "Contact ASU for more features"
         more_info: "More information"
     links:
       upgrade_enterprise_edition: "Upgrade to Enterprise Edition"
@@ -1479,7 +1479,7 @@ en:
   label_applied_status: "Applied status"
   label_archive_project: "Archive project"
   label_ascending: "Ascending"
-  label_assigned_to_me_work_packages: "Work packages assigned to me"
+  label_assigned_to_me_work_packages: "Tasks assigned to me"
   label_associated_revisions: "Associated revisions"
   label_attachment_delete: "Delete file"
   label_attachment_new: "New file"
@@ -1516,7 +1516,7 @@ en:
   label_consent_settings: "User Consent"
   label_wiki_menu_item: Wiki menu item
   label_select_main_menu_item: Select new main menu item
-  label_select_project: "Select a project"
+  label_select_project: "Select a challenge"
   label_required_disk_storage: "Required disk storage"
   label_send_invitation: Send invitation
   label_change_plural: "Changes"
@@ -1891,7 +1891,7 @@ en:
   label_this_week: "this week"
   label_this_year: "this year"
   label_time_entry_plural: "Spent time"
-  label_projects_menu: "Projects"
+  label_projects_menu: "Challenges"
   label_today: "today"
   label_top_menu: "Top Menu"
   label_topic_plural: "Topics"
@@ -1953,20 +1953,20 @@ en:
   label_wiki_show_new_page_link: "Show submenu item 'Create new child page'"
   label_wiki_show_submenu_item: "Show as submenu item of "
   label_wiki_start: "Start page"
-  label_work_package: "Work package"
-  label_work_package_attachments: "Work package attachments"
+  label_work_package: "Task"
+  label_work_package_attachments: "Task attachments"
   label_work_package_category_new: "New category"
-  label_work_package_category_plural: "Work package categories"
-  label_work_package_hierarchy: "Work package hierarchy"
-  label_work_package_new: "New work package"
-  label_work_package_edit: "Edit work package %{name}"
-  label_work_package_plural: "Work packages"
-  label_work_package_status: "Work package status"
+  label_work_package_category_plural: "Task categories"
+  label_work_package_hierarchy: "Task hierarchy"
+  label_work_package_new: "New task"
+  label_work_package_edit: "Edit task %{name}"
+  label_work_package_plural: "Tasks"
+  label_work_package_status: "Task status"
   label_work_package_status_new: "New status"
-  label_work_package_status_plural: "Work package statuses"
-  label_work_package_types: "Work package types"
-  label_work_package_tracking: "Work package tracking"
-  label_work_package_view_all: "View all work packages"
+  label_work_package_status_plural: "Task statuses"
+  label_work_package_types: "Task types"
+  label_work_package_tracking: "Task tracking"
+  label_work_package_view_all: "View all tasks"
   label_workflow: "Workflow"
   label_workflow_plural: "Workflows"
   label_workflow_summary: "Summary"

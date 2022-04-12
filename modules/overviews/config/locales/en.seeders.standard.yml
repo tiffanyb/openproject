@@ -32,66 +32,30 @@ en:
         projects:
           chess_challenge:
             project-overview:
-              row_count: 6
+              row_count: 2
               column_count: 2
               widgets:
                 - identifier: 'custom_text'
                   start_row: 1
-                  end_row: 2
-                  start_column: 1
-                  end_column: 3
-                  options:
-                    name: 'Welcome'
-                    text: '![Teaser](##attachment:"demo_project_teaser.png")'
-                  attachments:
-                    - demo_project_teaser.png
-                - identifier: 'custom_text'
-                  start_row: 2
-                  end_row: 5
+                  end_row: 4
                   start_column: 1
                   end_column: 2
                   options:
                     name: 'Getting started'
                     text: |
-                      We are glad you joined! We suggest to try a few things to get started in OpenProject.
-
-                      Discover the most important features with our [Guided Tour](%{base_url}/projects/demo-project/work_packages/?start_onboarding_tour=true).
-
-                      _Try the following steps:_
-
-                      1. *Invite new members to your project*: &rightarrow; Go to [Members](%{base_url}/projects/demo-project/members) in the project navigation.
-                      2. *View the work in your project*: &rightarrow; Go to [Work packages](%{base_url}/projects/demo-project/work_packages) in the project navigation.
-                      3. *Create a new work package*: &rightarrow; Go to [Work packages &rightarrow; Create](%{base_url}/projects/demo-project/work_packages/new).
-                      4. *Create and update a project plan*: &rightarrow; Go to [Project plan](%{base_url}/projects/demo-project/work_packages?query_id=##query.id:"Project plan") in the project navigation.
-                      5. *Activate further modules*: &rightarrow; Go to [Project settings &rightarrow; Modules](%{base_url}/projects/demo-project/settings/modules).
-                      6. *Complete your tasks in the project*: &rightarrow; Go to [Work packages &rightarrow; Tasks](%{base_url}/projects/demo-project/work_packages/details/##wp.id:"Specific commands to start the challenge"/overview?query_id=##query.id:"Tasks").
-
-                      Here you will find our [User Guides](https://docs.openproject.org/user-guide/).
-                      Please let us know if you have any questions or need support. Contact us: [support[at]openproject.com](mailto:support@openproject.com).
-                - identifier: 'project_status'
-                  start_row: 2
-                  end_row: 3
+                      We are glad you joined! We suggest to try a few things to get started in Chess Challenge.
+                - identifier: 'project_description'
+                  start_row: 1
+                  end_row: 2
                   start_column: 2
                   end_column: 3
-                - identifier: 'project_description'
+                - identifier: 'members'
                   start_row: 3
                   end_row: 4
                   start_column: 2
                   end_column: 3
-                - identifier: 'members'
-                  start_row: 4
-                  end_row: 5
-                  start_column: 2
-                  end_column: 3
                   options:
                     name: 'Members'
-                - identifier: 'work_packages_overview'
-                  start_row: 5
-                  end_row: 6
-                  start_column: 1
-                  end_column: 3
-                  options:
-                    name: 'Work packages'
           #scrum-project:
             #project-overview:
               #row_count: 6

@@ -1,6 +1,6 @@
 OpenProject::Application.configure do
   config.assets.precompile += %w(
-    favicon.ico
+    favicon.png
     locales/*.js
   )
 end
