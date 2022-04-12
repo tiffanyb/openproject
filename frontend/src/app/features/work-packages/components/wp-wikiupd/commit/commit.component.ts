@@ -32,7 +32,7 @@ export class CommitComponent implements OnInit {
 	@ViewChild('input') input:ElementRef;
 
   public text = {
-    title: () => "Hello world",
+    title: () => "Closing task confirmation",
     label: "Task completion message",
     backButton: "Back",
     nextButton: "Next",
