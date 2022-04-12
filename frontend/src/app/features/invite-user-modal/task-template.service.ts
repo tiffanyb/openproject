@@ -46,7 +46,7 @@ export class OpTaskTemplateService {
   ) {
   }
 
-  public open(categoryId:string|null = this.currentProjectService.id) {
+  public open(categoryId: HalResource) {
     const modal = this.opModalService.show(
       TaskTemplateComponent,
       'global',

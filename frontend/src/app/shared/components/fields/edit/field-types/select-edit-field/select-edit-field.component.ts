@@ -26,11 +26,11 @@
 // See COPYRIGHT and LICENSE files for more details.
 //++
 
-import { Component, InjectFlags, OnInit } from '@angular/core';
+import { Injector, ElementRef, ChangeDetectorRef, Inject, Component, InjectFlags, OnInit, InjectionToken } from '@angular/core';
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
 import { SelectAutocompleterRegisterService } from 'core-app/shared/components/fields/edit/field-types/select-edit-field/select-autocompleter-register.service';
 import { from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 import { InjectField } from 'core-app/shared/helpers/angular/inject-field.decorator';
 import { CreateAutocompleterComponent } from 'core-app/shared/components/autocompleter/create-autocompleter/create-autocompleter.component';
 import { EditFormComponent } from 'core-app/shared/components/fields/edit/edit-form/edit-form.component';
@@ -39,6 +39,14 @@ import { CollectionResource } from 'core-app/features/hal/resources/collection-r
 import { HalResourceNotificationService } from 'core-app/features/hal/services/hal-resource-notification.service';
 import { HalResourceSortingService } from 'core-app/features/hal/services/hal-resource-sorting.service';
 import { EditFieldComponent } from '../../edit-field.component';
+
+import { EditFieldHandler } from 'core-app/shared/components/fields/edit/editing-portal/edit-field-handler';
+import { I18nService } from 'core-app/core/i18n/i18n.service';
+import { Field, IFieldSchema } from 'core-app/shared/components/fields/field.base';
+import { ResourceChangeset } from 'core-app/shared/components/fields/changeset/resource-changeset';
+import { OpTaskTemplateService } from 'core-app/features/invite-user-modal/task-template.service';
+import { HalResourceEditFieldHandler } from 'core-app/shared/components/fields/edit/field-handler/hal-resource-edit-field-handler';
+import { HalResourceEditingService } from 'core-app/shared/components/fields/edit/services/hal-resource-editing.service';
 
 export interface ValueOption {
   name:string;
@@ -232,6 +240,43 @@ export class SelectEditFieldComponent extends EditFieldComponent implements OnIn
   }
 
   public onChange(value:HalResource|undefined|null) {
+    // VERY DIRTY HACK!!! DON'T DO THIS.
+    if(this.name == 'category') {
+      const category = value;
+
+      if(category != null && category.id != null) {
+        const service = this.injector.get(OpTaskTemplateService);
+        service.open(category);
+        service.close.pipe(first()).subscribe((data : { [key:string] : any }) => {
+          let handler = this.handler as HalResourceEditFieldHandler;
+          let task = handler.resource.$copy();
+          let halEditing = this.injector.get(HalResourceEditingService);
+          const change = halEditing.edit(task);
+
+          // No input
+          if(data == null) {
+            return;
+          }
+
+          let format_text = '';
+          for(let key in data) {
+            format_text += key + ': ' + data[key] + '\n';
+          }
+          change.setValue('description', {raw: format_text});
+          console.log(change.changes);
+          
+          if(value) {
+            this.selectedOption = value;
+          }
+          halEditing.save(change).then(() => { });
+          return;
+
+        });
+        return;
+      }
+      return;
+    }
+
     if (value) {
       this.selectedOption = value;
       this.handler.handleUserSubmit();

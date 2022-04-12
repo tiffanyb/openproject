@@ -28,8 +28,18 @@
 
 import { HalResource } from 'core-app/features/hal/resources/hal-resource';
 import { ICKEditorContext } from 'core-app/shared/components/editor/components/ckeditor/ckeditor.types';
+import { Injector } from '@angular/core';
 
 export class CategoryResource extends HalResource {
+
+  public constructor(public injector:Injector,
+    public $source:any,
+    public $loaded:boolean,
+    public halInitializer:(halResource:any) => void,
+    $halType:string) {
+      super(injector, $source, $loaded, halInitializer, $halType);
+  }
+
   public get state() {
     return this.states.projects.get(this.id!) as any;
   }

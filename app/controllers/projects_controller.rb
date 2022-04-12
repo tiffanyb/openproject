@@ -112,6 +112,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # VERY IMPROVISED, UPDATE THIS
   def wpappend
     @project = Project.find(params[:id])
     data = params[:msg]
@@ -123,7 +124,7 @@ class ProjectsController < ApplicationController
     content = wiki_page.content.text
     wiki_page.content.update(text: content + data + "\n")
 
-    render_403
+    render :layout => false
   end
 
   private

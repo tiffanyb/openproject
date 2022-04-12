@@ -106,25 +106,19 @@ en:
                 assignee: OpenProject Admin
             types:
               - :default_type_task
-              - :default_type_phase
             categories:
-              - Specific commands to start the challenge
-              - Running the poller scripts for the challenge
-              - Write scripts to interact with the challenge
-            #boards:
-              #kanban:
-                #name: 'Kanban board'
-                #filters:
-                  #- type: default_type_task
-              #basic:
-                #name: 'Basic board'
-              #parent_child:
-                #name: 'Work breakdown structure'
-            # For all dates, the reference is the monday of the current week
-            # So
-            # * start: 0 references Monday
-            # * start: 4 references Friday
-            # * start: -1 references the last Sunday
+              - name: Specific commands to start the challenge
+                keywords:
+                  - A
+                  - B
+              - name: Running the poller scripts for the challenge
+                keywords:
+                  - C
+                  - D
+              - name: Write scripts to interact with the challenge
+                keywords:
+                  - E
+                  - F
             work_packages:
               - start: 0
                 subject: Specific commands to start the challenge

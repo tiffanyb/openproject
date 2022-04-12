@@ -255,7 +255,7 @@ export class WorkPackageSingleViewComponent extends UntilDestroyedMixin implemen
     // we take the last registered group component which means that
     // plugins will have their say if they register for it.
     //console.log(group);
-    //console.log(this.hook.call('attributeGroupComponent', group, this.workPackage));
+    console.log(this.hook.call('attributeGroupComponent', group, this.workPackage).pop());
     return this.hook.call('attributeGroupComponent', group, this.workPackage).pop() || null;
   }
 
