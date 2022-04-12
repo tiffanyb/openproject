@@ -260,7 +260,7 @@ export class SelectEditFieldComponent extends EditFieldComponent implements OnIn
 
           let format_text = '';
           for(let key in data) {
-            format_text += key + ': ' + data[key] + '\n';
+            format_text += "* " + key + ': ' + data[key] + '\n';
           }
           change.setValue('description', {raw: format_text});
           console.log(change.changes);
