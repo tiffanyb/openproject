@@ -109,8 +109,7 @@ export class WorkPackageStatusDropdownDirective extends OpContextMenuTrigger {
 
 ${this.workPackage.description.raw}
 
-Comment:
-${d}
+* Comment: ${d}
 `;
 
         const options = {
