@@ -38,10 +38,12 @@ OpenProject::Static::Homescreen.manage :blocks do |blocks|
     {
       partial: 'projects'
     },
+=begin
     {
       partial: 'new_features',
       if: Proc.new { OpenProject::Configuration.show_community_links? }
     },
+=end
     {
       partial: 'users',
       if: Proc.new { User.current.admin? }
@@ -50,6 +52,7 @@ OpenProject::Static::Homescreen.manage :blocks do |blocks|
       partial: 'my_account',
       if: Proc.new { User.current.logged? }
     },
+=begin
     {
       partial: 'news',
       if: Proc.new { !@news.empty? }
@@ -58,14 +61,17 @@ OpenProject::Static::Homescreen.manage :blocks do |blocks|
       partial: 'community',
       if: Proc.new { EnterpriseToken.show_banners? || OpenProject::Configuration.show_community_links? }
     },
+=end
     {
       partial: 'administration',
       if: Proc.new { User.current.admin? }
     },
+=begin
     {
       partial: 'upsale',
       if: Proc.new { EnterpriseToken.show_banners? }
     }
+=end
   )
 end
 

@@ -196,6 +196,8 @@ OpenProject::Application.routes.draw do
 
       get :copy
 
+      post :wpappend
+
       patch :types
 
       # Destroy uses a get request to prompt the user before the actual DELETE request

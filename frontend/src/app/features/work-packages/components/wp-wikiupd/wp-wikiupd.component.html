@@ -1,0 +1,14 @@
+<div
+class="op-modal"
+*ngIf="loading"
+></div>
+
+<op-ium-commit
+  *ngIf="!loading"
+  class="op-modal"
+  [message]="message"
+  (save)="onMessageSubmit($event)"
+  (back)="closeMe()"
+  (close)="closeMe()"
+></op-ium-commit>
+

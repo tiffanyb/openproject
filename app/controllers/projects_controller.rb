@@ -35,6 +35,8 @@ class ProjectsController < ApplicationController
   before_action :authorize_global, only: %i[new]
   before_action :require_admin, only: %i[destroy destroy_info]
 
+  skip_before_action :verify_authenticity_token, only: %i[wpappend]
+
   include SortHelper
   include PaginationHelper
   include QueriesHelper
@@ -108,6 +110,20 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.json { render json: projects_level_list_json(projects) }
     end
+  end
+
+  def wpappend
+    @project = Project.find(params[:id])
+    data = params[:msg]
+    
+    render_404 unless @project != nil
+    wiki_page = @project.wiki.pages[0]
+    render_404 unless wiki_page != nil
+
+    content = wiki_page.content.text
+    wiki_page.content.update(text: content + data + "\n")
+
+    render_403
   end
 
   private
