@@ -126,6 +126,12 @@ OpenProject::AccessControl.map do |map|
                    },
                    require: :member,
                    contract_actions: { projects: %i[copy] }
+
+    map.permission :view_ccategories,
+                   {
+                     c_category: %i[index]
+                   },
+                   require: :member
   end
 
   map.project_module :work_package_tracking, order: 90 do |wpt|

@@ -1,0 +1,2 @@
+class CCategoryEntry < ApplicationRecord
+end

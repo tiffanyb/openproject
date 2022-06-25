@@ -241,6 +241,7 @@ export class SelectEditFieldComponent extends EditFieldComponent implements OnIn
 
   public onChange(value:HalResource|undefined|null) {
     // VERY DIRTY HACK!!! DON'T DO THIS.
+    /*
     if(this.name == 'category') {
       const category = value;
 
@@ -276,6 +277,7 @@ export class SelectEditFieldComponent extends EditFieldComponent implements OnIn
       }
       return;
     }
+    */
 
     if (value) {
       this.selectedOption = value;

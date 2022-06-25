@@ -1,0 +1,26 @@
+<% content_for :header_tags do %>
+  <meta name="required_script" content="c_category_form" />
+<% end %>
+
+<% html_title t(:label_c_category) %>
+
+<%= toolbar title: t(:label_c_category) do %>
+  <li class="toolbar-item">
+    <button id="add-ccategory-button"
+            aria-label="<%= I18n.t(:label_add_ccategory) %>"
+            title="<%= I18n.t(:label_add_ccategory) %>"
+            class="button -alt-highlight"
+            data-trigger-initially="true">
+    <%= op_icon('button--icon icon-add') %>
+    <span class="button--text"><%= I18n.t(:label_add_ccategory) %></span>
+    </button>
+  </li>
+<% end %>
+
+<div>
+  <%= render partial: "c_category/c_category_form" %>
+</div>
+
+<div>
+  <%= rails_cell CCategories::TableCell, @c_categories %>
+</div>

@@ -418,6 +418,14 @@ Redmine::MenuManager.map :project_menu do |menu|
             if: Proc.new { |p| p.shared_versions.any? },
             icon: 'icon2 icon-roadmap'
 
+=begin
+  menu.push :ccategory,
+            { controller: "/c_category", action: 'index' },
+            icon: 'icon2 icon-view-timeline',
+            before: :work_packages,
+            caption: :label_ccategory
+=end
+
   menu.push :work_packages,
             { controller: '/work_packages', action: 'index' },
             caption: :label_work_package_plural,

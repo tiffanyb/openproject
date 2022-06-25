@@ -161,126 +161,127 @@ en:
                 - Constraints
             work_packages:
               - start: 0
-                subject: Specific commands to start the challenge
+                subject: '[Warmup] Specific commands to start the challenge'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
                 category: 1
               - start: 0
-                subject: Running the poller scripts for the challenge
+                subject: '[Warmup] Running the poller scripts for the challenge'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Write scripts to interact with the challenge
+                subject: '[Reverse engineering] Write scripts to interact with the challenge'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Features the challenge provides
+                subject: '[Reverse engineering] Find out features the challenge provides'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Protocol to communicate with the challenge
+                subject: '[Reverse engineering] Protocol to communicate with the challenge'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Interesting strings inside the binaries
+                subject: '[Reverse engineering] Interesting strings inside the binaries'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Identify library functions
+                subject: '[Reverse engineering] Identify library functions'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Identify core feature functions
+                subject: '[Reverse engineering] Identify core feature functions'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Identify critical data / data structure
+                subject: '[Reverse engineering] Identify critical data / data structure'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Ease fuzzing
+                subject: '[Fuzzing] Ease fuzzing'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Transform fuzzing binary
+                subject: '[Fuzzing] Transform fuzzing binary'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Generate a fuzzing seed
+                subject: '[Fuzzing] Generate a fuzzing seed'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Check if fuzzing is saturated
+                subject: '[Fuzzing] Check if fuzzing is saturated'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Avoid symbolic execution explosion
+                subject: '[Fuzzing] Avoid symbolic execution explosion'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Reproduce a crash
+                subject: '[POI Analysis] Reproduce a crash'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Minimize a crash
+                subject: '[POI Analysis] Minimize a crash'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Understand the crash message
+                subject: '[POI Analysis] Understand the crash message'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Triage and find out the root cause of a crash
+                subject: '[POI Analysis] Triage and find out the root cause of a crash'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Convert a crash to a POV
+                subject: '[POI Analysis] Convert a crash to a POV'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Identify POI in the program
+                subject: '[POI Analysis] Identify POI in the program'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Run the generated input that touches the POI
+                subject: '[POI Analysis] Run the generated input that touches the POI'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Minimize POI input
+                subject: '[POI Analysis] Minimize POI input'
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Associate a crash triggered by the POI, if there's any
+                subject: "[POI Analysis] Associate a crash triggered by the POI, if there's any"
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
               - start: 0
-                subject: Generate a symbolic trace to reach the POI's target function
+                subject: "[POI Analysis] Generate a symbolic trace to reach the POI's target function"
                 description: ''
                 status: default_status_in_progress
                 type: default_type_task
             wiki: |
-              Here we will share the finished tasks' results
+              Here we will share the finished tasks' results.
+              This wiki page will be automatically updated when a task is closed.
             templated: true

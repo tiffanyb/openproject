@@ -993,6 +993,7 @@ en:
 
   button_add: "Add"
   button_add_comment: "Add comment"
+  button_add_field: "Add field"
   button_add_member: Add member
   button_add_watcher: "Add watcher"
   button_annotate: "Annotate"
@@ -1456,6 +1457,7 @@ en:
   label_add_edit_translations: "Add and edit translations"
   label_add_another_file: "Add another file"
   label_add_columns: "Add selected columns"
+  label_add_ccategory: "Add category"
   label_add_note: "Add a note"
   label_add_related_work_packages: "Add related work packages"
   label_add_subtask: "Add subtask"
@@ -1511,8 +1513,10 @@ en:
   label_bulk_edit_selected_work_packages: "Bulk edit selected work packages"
   label_bundled: '(Bundled)'
   label_calendar: "Calendar"
+  label_c_category: "Task categories"
   label_calendar_show: "Show Calendar"
   label_category: "Category"
+  label_ccategory: "Task category"
   label_consent_settings: "User Consent"
   label_wiki_menu_item: Wiki menu item
   label_select_main_menu_item: Select new main menu item
@@ -1891,6 +1895,7 @@ en:
   label_this_week: "this week"
   label_this_year: "this year"
   label_time_entry_plural: "Spent time"
+  label_title: "Title"
   label_projects_menu: "Challenges"
   label_today: "today"
   label_top_menu: "Top Menu"

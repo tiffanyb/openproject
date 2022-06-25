@@ -52,6 +52,8 @@ class Tables::WorkPackages < Tables::Base
       t.belongs_to :responsible, type: :int
       t.integer :mtcategoryid, default: 0, type: :int
 
+      t.integer :ccategory_id, default: 0, null: true 
+
       # Nested Set
       t.integer :root_id, default: nil
       t.integer :lft, default: nil
