@@ -1,0 +1,28 @@
+<%= labelled_tabular_form_for(:c_category, url: main_app.project_c_category_create_path, html: { id: "c_category_add_form", 
+class: "form -vertical -bordered -medium-compressed",
+style: "display: none" }) do |f| %>
+  <a title="<% t('js.close_form_title') %>" class="hide-c-category-form-button form--close icon-context icon-close"></a>
+  <div class="grid-block">
+    <div class="grid-content medium-5 small-12 -flex">
+      <div class="form--field">
+        <%= styled_label_tag :c_category_title, t(:title) %>
+        <input type="text" name="title" />
+      </div>
+    </div>
+  </div>
+  <div id="fields-div">
+  </div>
+  <div class="grid-block">
+    <div class="grid-content medium-8 small-12 collapse -flex -with-button">  
+      <div class="c-category-field-add-button--container">
+        <button class='button -highlight -with-icon icon-add',
+                id='add-category-field--button'><%= t(:button_add_field) %></button>
+      </div>
+      <div class="c-category-submit-button--container">
+        <%= f.button t(:button_create),
+                     class: 'button -highlight -with-icon icon-checkmark', 
+                     id: 'create-category--submit-button' %>
+      </div>
+    </div>
+  </div>
+<% end %>

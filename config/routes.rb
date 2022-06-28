@@ -328,6 +328,9 @@ OpenProject::Application.routes.draw do
           constraints: { rev: /[\w0-9.\-_]+/, repo_path: /.*/ },
           as: 'show_revisions_path'
     end
+
+    get 'c_category/index'
+    post 'c_category/create'
   end
 
   resources :admin, controller: :admin, only: :index do

@@ -56,6 +56,9 @@ class WorkPackage < ApplicationRecord
   belongs_to :priority, class_name: 'IssuePriority', foreign_key: 'priority_id'
   belongs_to :category, class_name: 'Category', foreign_key: 'category_id'
 
+  belongs_to :c_category, class_name: 'CCategory', foreign_key: 'ccategory_id'
+  has_many :c_category_entries
+
   has_many :time_entries, dependent: :delete_all
 
   has_and_belongs_to_many :changesets, -> {

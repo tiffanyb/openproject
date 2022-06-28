@@ -42,6 +42,8 @@ class Project < ApplicationRecord
   # reserved identifiers
   RESERVED_IDENTIFIERS = %w(new).freeze
 
+  has_many :c_categories, class_name: 'CCategory'
+
   has_many :members, -> {
     # TODO: check whether this should
     # remain to be limited to User only

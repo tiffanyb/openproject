@@ -55,7 +55,7 @@ module Type::AttributeGroups
     # All known default
     mattr_accessor :default_groups do
       {
-        mt_category: :label_mt_category,
+        #mt_category: :label_mt_category,
         people: :label_people,
         estimates_and_time: :label_estimates_and_time,
         details: :label_details,

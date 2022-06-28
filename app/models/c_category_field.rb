@@ -1,0 +1,2 @@
+class CCategoryField < ApplicationRecord
+end
